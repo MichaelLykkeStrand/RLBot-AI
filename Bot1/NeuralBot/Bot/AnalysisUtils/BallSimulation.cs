@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bot.AnalysisUtils
 {
-    public static class BallPredictionAnalysis
+    public static class BallSimulation
     {
 
         const int GOAL_THRESHOLD = 5235;

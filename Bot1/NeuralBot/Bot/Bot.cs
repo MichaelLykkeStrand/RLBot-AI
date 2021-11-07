@@ -25,15 +25,14 @@ namespace Bot
             Vector3 carLocation = packet.Players[Index].Physics.Location;
             Orientation carRotation = packet.Players[Index].Physics.Rotation;
 
-            PredictionSlice? ballInFuture = BallPredictionAnalysis.FindSliceAtTime(this.GetBallPrediction(), packet.GameInfo.SecondsElapsed+2f);
+            PredictionSlice? ballInFuture = BallSimulation.FindSliceAtTime(this.GetBallPrediction(), packet.GameInfo.SecondsElapsed+2f);
             if(ballInFuture != null)
             {
                 var ballFutureLocation = (Vector3)ballInFuture?.Physics.Location;
-                var targetLocation = ballFutureLocation;
-                Renderer.DrawLine3D(Color.Gray, ballLocation, targetLocation);
-                Renderer.DrawString3D("Future", Color.Black, targetLocation, 1, 1);
+                Renderer.DrawLine3D(Color.Gray, ballLocation, ballFutureLocation);
+                Renderer.DrawString3D("Future", Color.Black, ballFutureLocation, 1, 1);
             }
-            PredictionSlice? goalInFuture = BallPredictionAnalysis.PredictFutureGoal(this.GetBallPrediction());
+            PredictionSlice? goalInFuture = BallSimulation.PredictFutureGoal(this.GetBallPrediction());
             if (goalInFuture != null)
             {
                 var goalInFutureLocation = (Vector3)goalInFuture?.Physics.Location;
