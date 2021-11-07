@@ -74,6 +74,7 @@
     <Compile Include="Bot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sequence\Step.cs" />
     <Compile Include="Utilities\DataConversion.cs" />
     <Compile Include="Utilities\Processed\BallPrediction\PredictionSlice.cs" />
     <Compile Include="Utilities\Processed\BallPrediction\BallPrediction.cs" />

@@ -28,10 +28,16 @@ namespace Bot
             PredictionSlice? ballInFuture = BallPredictionAnalysis.FindSliceAtTime(this.GetBallPrediction(), packet.GameInfo.SecondsElapsed+2f);
             if(ballInFuture != null)
             {
-                var ballFutureLocation = (PredictionSlice)ballInFuture;
-                var targetLocation = ballFutureLocation.Physics.Location;
+                var ballFutureLocation = (Vector3)ballInFuture?.Physics.Location;
+                var targetLocation = ballFutureLocation;
                 Renderer.DrawLine3D(Color.Gray, ballLocation, targetLocation);
                 Renderer.DrawString3D("Future", Color.Black, targetLocation, 1, 1);
+            }
+            PredictionSlice? goalInFuture = BallPredictionAnalysis.PredictFutureGoal(this.GetBallPrediction());
+            if (goalInFuture != null)
+            {
+                var goalInFutureLocation = (Vector3)goalInFuture?.Physics.Location;
+                Renderer.DrawString3D("Goal", Color.LightGreen, goalInFutureLocation, 2, 2);
             }
             // Find where the ball is relative to us.
             Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
