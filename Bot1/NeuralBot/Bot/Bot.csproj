@@ -75,10 +75,14 @@
     <Compile Include="ANN\DataSet.cs" />
     <Compile Include="ANN\Neuron.cs" />
     <Compile Include="ANN\Synapse.cs" />
+    <Compile Include="BehaviourTree\ActionNode.cs" />
+    <Compile Include="BehaviourTree\Node.cs" />
+    <Compile Include="BehaviourTree\NodeStates.cs" />
+    <Compile Include="BehaviourTree\Selector.cs" />
+    <Compile Include="BehaviourTree\Sequence.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sequence\Step.cs" />
     <Compile Include="Utilities\DataConversion.cs" />
     <Compile Include="Utilities\Processed\BallPrediction\PredictionSlice.cs" />
     <Compile Include="Utilities\Processed\BallPrediction\BallPrediction.cs" />
