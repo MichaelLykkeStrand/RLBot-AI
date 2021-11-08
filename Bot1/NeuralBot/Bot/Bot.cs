@@ -38,6 +38,12 @@ namespace Bot
                 var goalInFutureLocation = (Vector3)goalInFuture?.Physics.Location;
                 Renderer.DrawString3D("Goal", Color.LightGreen, goalInFutureLocation, 2, 2);
             }
+            PredictionSlice? groundInFuture = BallSimulation.FindSliceWhereBallIsGrounded(this.GetBallPrediction(), packet.GameInfo.SecondsElapsed + 2f);
+            if (groundInFuture != null)
+            {
+                var groundInFutureLocation = (Vector3)groundInFuture?.Physics.Location;
+                Renderer.DrawString3D("Grounded", Color.LightGreen, groundInFutureLocation, 2, 2);
+            }
             // Find where the ball is relative to us.
             Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
 

@@ -11,6 +11,7 @@ namespace Bot.AnalysisUtils
     {
 
         const int GOAL_THRESHOLD = 5235;
+        const float BALL_SIZE = 92.75f;
         public static PredictionSlice? FindSliceAtTime(BallPrediction ballPrediction, float time)
         {
             float startTime = ballPrediction.Slices[0].GameSeconds;
@@ -18,6 +19,24 @@ namespace Bot.AnalysisUtils
             if(0 <= approxIndex && approxIndex < ballPrediction.Slices.Length)
             {
                 return ballPrediction.Slices[approxIndex];
+            }
+            return null;
+        }
+
+        public static PredictionSlice? FindSliceWhereBallIsGrounded(BallPrediction ballPrediction, float time)
+        {
+            float startTime = ballPrediction.Slices[0].GameSeconds;
+            int approxIndex = (int)(time - startTime) * 60;
+            if (0 <= approxIndex && approxIndex < ballPrediction.Slices.Length)
+            {
+                for (int i = 0; i < approxIndex; i++)
+                {
+                    var slice = ballPrediction.Slices[i];
+                    if (slice.Physics.Location.Z <= BALL_SIZE)
+                    {
+                        return ballPrediction.Slices[i];
+                    }
+                }
             }
             return null;
         }
