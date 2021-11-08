@@ -70,7 +70,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalysisUtils\BallPredictionAnalysis.cs" />
+    <Compile Include="AnalysisUtils\BallSimulation.cs" />
+    <Compile Include="ANN\ANN.cs" />
+    <Compile Include="ANN\DataSet.cs" />
+    <Compile Include="ANN\Neuron.cs" />
+    <Compile Include="ANN\Synapse.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,5 +98,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
