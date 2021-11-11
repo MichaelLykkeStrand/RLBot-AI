@@ -19,5 +19,13 @@ namespace Bot.Bezier
             var cubic = Vector3.Lerp(a, b, t);
             return cubic;
         }
+
+        public static Vector3 QuadBezier(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+        {
+            var l1 = Vector3.Lerp(p0, p1, t);
+            var l2 = Vector3.Lerp(p1, p2, t);
+            var quad = Vector3.Lerp(l1, l2, t);
+            return quad;
+        }
     }
 }
