@@ -19,16 +19,25 @@ namespace Bot
         {
             // We process the gameTickPacket and convert it to our own internal data structure.
             Packet packet = new Packet(gameTickPacket);
-
             // Get the data required to drive to the ball.
+            float time = packet.GameInfo.SecondsElapsed;
             Vector3 ballLocation = packet.Ball.Physics.Location;
-            Vector3 carLocation = packet.Players[Index].Physics.Location;
+            Physics carPhysics = packet.Players[Index].Physics;
+            Vector3 carLocation = carPhysics.Location;
+            
             Orientation carRotation = packet.Players[Index].Physics.Rotation;
 
-            PredictionSlice? ballInFuture = BallSimulation.FindSliceAtTime(this.GetBallPrediction(), packet.GameInfo.SecondsElapsed+2f);
-            if(ballInFuture != null)
+            Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
+
+            PredictionSlice? ballInFuture = BallSimulation.FindSliceAtTime(this.GetBallPrediction(), time+2f);
+            //TODO Should be removed once states are implemented
+            if (ballInFuture != null)
             {
                 var ballFutureLocation = (Vector3)ballInFuture?.Physics.Location;
+                // Find where the ball is relative to us.
+                Vector3 targetPos = CarSimulation.GetBezierCurve(carPhysics, ballInFuture?.Physics, new Vector3(0, 0, 0), Renderer)[0];
+                Renderer.DrawString3D("NextMove", Color.White, targetPos, 2, 2);
+                ballRelativeLocation = Orientation.RelativeLocation(carLocation, targetPos, carRotation);
                 Renderer.DrawLine3D(Color.Gray, ballLocation, ballFutureLocation);
                 Renderer.DrawString3D("Future", Color.Black, ballFutureLocation, 1, 1);
             }
@@ -38,17 +47,17 @@ namespace Bot
                 var goalInFutureLocation = (Vector3)goalInFuture?.Physics.Location;
                 Renderer.DrawString3D("Goal", Color.LightGreen, goalInFutureLocation, 2, 2);
             }
-            PredictionSlice? groundInFuture = BallSimulation.FindSliceWhereBallIsGrounded(this.GetBallPrediction(), packet.GameInfo.SecondsElapsed + 2f);
+            PredictionSlice? groundInFuture = BallSimulation.FindSliceWhereBallIsGrounded(this.GetBallPrediction(), time + 2f);
             if (groundInFuture != null)
             {
                 var groundInFutureLocation = (Vector3)groundInFuture?.Physics.Location;
                 Renderer.DrawString3D("Grounded", Color.LightGreen, groundInFutureLocation, 2, 2);
             }
-            // Find where the ball is relative to us.
-            Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
 
             // Decide which way to steer in order to get to the ball.
             // If the ball is to our left, we steer left. Otherwise we steer right.
+
+
             float steer;
             if (ballRelativeLocation.Y > 0)
                 steer = 1;
