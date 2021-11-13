@@ -8,35 +8,34 @@ using System.Threading.Tasks;
 
 namespace Bot.BehaviourTree
 {
-    class Sequence : Node
+    class PrioritySelector : Selector
     {
-        private List<Node> m_nodes = new List<Node>();
-        public Sequence(List<Node> nodes)
+
+        public PrioritySelector(List<Node> nodes) : base(nodes)
         {
-            m_nodes = nodes;
+            
         }
 
+        //Evaluate state of child nodes
         public override State Update(Bot agent, Packet packet, Controller output)
         {
-            bool hasRunningChild = false;
-            foreach (var node in m_nodes)
+            foreach (Node node in m_nodes)
             {
                 switch (node.Update(agent,packet,output))
                 {
                     case State.FAILURE:
-                        _state = State.FAILURE;
-                        return _state;
+                        continue;
                     case State.SUCCESS:
-                        continue;
-                    case State.RUNNING:
-                        hasRunningChild = true;
-                        continue;
-                    default:
                         _state = State.SUCCESS;
                         return _state;
+                    case State.RUNNING:
+                        _state = State.RUNNING;
+                        return _state;
+                    default:
+                        continue;
                 }
             }
-            _state = hasRunningChild ? State.RUNNING : State.SUCCESS;
+            _state = State.FAILURE;
             return _state;
         }
     }

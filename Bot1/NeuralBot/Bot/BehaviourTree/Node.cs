@@ -1,23 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bot.Utilities.Processed.Packet;
+using RLBotDotNet;
+using System;
+
 
 namespace Bot.BehaviourTree
 {
+    public enum State
+    {
+        FAILURE,
+        SUCCESS,
+        RUNNING
+    }
+
     [Serializable]
     public abstract class Node
     {
-        public delegate NodeStates NodeReturn();
+        protected State _state;
 
-        protected NodeStates m_nodeState;
-
-        public NodeStates nodeState
+        public State State
         {
-            get { return m_nodeState; }
+            get { return _state; }
         }
 
-        public abstract NodeStates Evaluate();
+        public abstract State Update(Bot agent, Packet packet, Controller output);
+
     }
 }
