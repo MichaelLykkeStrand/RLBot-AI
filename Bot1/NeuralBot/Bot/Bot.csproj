@@ -79,10 +79,9 @@
     <Compile Include="BehaviourTree\ActionNode.cs" />
     <Compile Include="BehaviourTree\BezierDrive.cs" />
     <Compile Include="BehaviourTree\Node.cs" />
-    <Compile Include="BehaviourTree\NodeStates.cs" />
+    <Compile Include="BehaviourTree\PrioritySelector.cs" />
     <Compile Include="BehaviourTree\Selector.cs" />
     <Compile Include="BehaviourTree\Sequence.cs" />
-    <Compile Include="InputManagement\Game.cs" />
     <Compile Include="BezierUtils\Bezier.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Program.cs" />
