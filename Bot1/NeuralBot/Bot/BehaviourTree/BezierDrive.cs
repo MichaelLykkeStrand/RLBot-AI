@@ -10,7 +10,7 @@ namespace Bot.BehaviourTree
 {
     class BezierDrive : ActionNode
     {
-        public override State Update(Bot agent, Packet packet, Controller output)
+        public override State Update(Bot agent, Packet packet, ref Controller output)
         {
             throw new NotImplementedException();
         }

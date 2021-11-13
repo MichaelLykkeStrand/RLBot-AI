@@ -17,11 +17,11 @@ namespace Bot.BehaviourTree
         }
 
         //Evaluate state of child nodes
-        public override State Update(Bot agent, Packet packet, Controller output)
+        public override State Update(Bot agent, Packet packet,ref Controller output)
         {
             foreach (Node node in m_nodes)
             {
-                switch (node.Update(agent,packet,output))
+                switch (node.Update(agent,packet,ref output))
                 {
                     case State.FAILURE:
                         continue;

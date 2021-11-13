@@ -22,7 +22,7 @@ namespace Bot.BehaviourTree
             get { return _state; }
         }
 
-        public abstract State Update(Bot agent, Packet packet, Controller output);
+        public abstract State Update(Bot agent, Packet packet, ref Controller output);
 
     }
 }

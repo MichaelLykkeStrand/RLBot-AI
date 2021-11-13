@@ -16,12 +16,12 @@ namespace Bot.BehaviourTree
             m_nodes = nodes;
         }
 
-        public override State Update(Bot agent, Packet packet, Controller output)
+        public override State Update(Bot agent, Packet packet,ref Controller output)
         {
             bool hasRunningChild = false;
             foreach (var node in m_nodes)
             {
-                switch (node.Update(agent,packet,output))
+                switch (node.Update(agent,packet,ref output))
                 {
                     case State.FAILURE:
                         _state = State.FAILURE;
