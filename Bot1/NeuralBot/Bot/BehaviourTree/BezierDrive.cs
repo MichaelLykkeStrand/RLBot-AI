@@ -12,6 +12,8 @@ using Color = System.Drawing.Color;
 using Physics = Bot.Utilities.Processed.Packet.Physics;
 using PredictionSlice = Bot.Utilities.Processed.BallPrediction.PredictionSlice;
 using Vector3 = System.Numerics.Vector3;
+using Bot.Objects;
+
 
 namespace Bot.BehaviourTree
 {
@@ -19,7 +21,7 @@ namespace Bot.BehaviourTree
     {
         public override NodeResult Update(Bot agent, Packet packet, ref Controller output)
         {
-            float time = packet.GameInfo.SecondsElapsed;
+            float time = Game.Time;
             Physics carPhysics = packet.Players[agent.Index].Physics;
             Vector3 carLocation = carPhysics.Location;
             Vector3 ballLocation = packet.Ball.Physics.Location;

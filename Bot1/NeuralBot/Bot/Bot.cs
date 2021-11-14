@@ -9,6 +9,8 @@ using Bot.Utilities.Processed.FieldInfo;
 using Bot.Utilities.Processed.Packet;
 using RLBotDotNet;
 
+using Bot.Objects;
+
 namespace Bot
 {
     // We want to our bot to derive from Bot, and then implement its abstract methods.
@@ -23,43 +25,10 @@ namespace Bot
             
             // We process the gameTickPacket and convert it to our own internal data structure.
             Packet packet = new Packet(gameTickPacket);
-            float time = packet.GameInfo.SecondsElapsed;
-            /*
-            // Get the data required to drive to the ball.
-           
-            Vector3 ballLocation = packet.Ball.Physics.Location;
-            Physics carPhysics = packet.Players[Index].Physics;
-            Vector3 carLocation = carPhysics.Location;
-            
-            Orientation carRotation = packet.Players[Index].Physics.Rotation;
-
-            Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
-
-            PredictionSlice? ballInFuture = BallSimulation.FindSliceAtTime(this.GetBallPrediction(), time+2f);
-            //TODO Should be removed once states are implemented
-            if (ballInFuture != null)
-            {
-                var ballFutureLocation = (Vector3)ballInFuture?.Physics.Location;
-                // Find where the ball is relative to us.
-                Vector3 targetPos = CarSimulation.GetBezierCurve(carPhysics, ballInFuture?.Physics, new Vector3(0, 0, 0), Renderer)[0];
-                Renderer.DrawString3D("NextMove", Color.White, targetPos, 2, 2);
-                ballRelativeLocation = Orientation.RelativeLocation(carLocation, targetPos, carRotation);
-                Renderer.DrawLine3D(Color.Gray, ballLocation, ballFutureLocation);
-                Renderer.DrawString3D("Future", Color.Black, ballFutureLocation, 1, 1);
-            }
-            */
-            PredictionSlice? goalInFuture = BallSimulation.PredictFutureGoal(this.GetBallPrediction());
-            if (goalInFuture != null)
-            {
-                var goalInFutureLocation = (Vector3)goalInFuture?.Physics.Location;
-                Renderer.DrawString3D("Goal", Color.LightGreen, goalInFutureLocation, 2, 2);
-            }
-            PredictionSlice? groundInFuture = BallSimulation.FindSliceWhereBallIsGrounded(this.GetBallPrediction(), time + 2f);
-            if (groundInFuture != null)
-            {
-                var groundInFutureLocation = (Vector3)groundInFuture?.Physics.Location;
-                Renderer.DrawString3D("Grounded", Color.LightGreen, groundInFutureLocation, 2, 2);
-            }
+            // Updates the ball's position, velocity, etc
+            Objects.Ball.Update(this, gameTickPacket.Ball.Value);
+            // Updates the game's score, time, etc
+            Game.Update(gameTickPacket);
 
             List<Node> nodes = new List<Node>();
             FlipToBall ftb = new FlipToBall();
@@ -70,31 +39,6 @@ namespace Bot
             PrioritySelector tmpRootNode = new PrioritySelector(nodes);
             var tmpController = new Controller();
             var tmpControl = tmpRootNode.Update(this, packet, ref tmpController).controller;
-            // Decide which way to steer in order to get to the ball.
-            // If the ball is to our left, we steer left. Otherwise we steer right.
-
-            /*
-            float steer;
-            if (ballRelativeLocation.Y > 0)
-                steer = 1;
-            else
-                steer = -1;
-            
-            
-            // Examples of rendering in the game
-            Renderer.DrawString3D("Ball", Color.Black, ballLocation, 1, 1);
-            Renderer.DrawString3D(steer > 0 ? "Right" : "Left", Color.Red, carLocation, 1, 1);
-            Renderer.DrawLine3D(Color.Red, carLocation, ballLocation);
-            
-            // This controller will contain all the inputs that we want the bot to perform.
-            return new Controller
-            {
-                // Set the throttle to 1 so the bot can move.
-                Throttle = 1,
-                Steer = steer
-            };
-            */
-
             return tmpControl;
         }
         
