@@ -78,7 +78,9 @@
     <Compile Include="ANN\Synapse.cs" />
     <Compile Include="BehaviourTree\ActionNode.cs" />
     <Compile Include="BehaviourTree\BezierDrive.cs" />
+    <Compile Include="BehaviourTree\FlipToBall.cs" />
     <Compile Include="BehaviourTree\Node.cs" />
+    <Compile Include="BehaviourTree\NodeResult.cs" />
     <Compile Include="BehaviourTree\PrioritySelector.cs" />
     <Compile Include="BehaviourTree\Selector.cs" />
     <Compile Include="BehaviourTree\Sequence.cs" />

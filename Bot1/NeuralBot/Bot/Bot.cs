@@ -1,6 +1,9 @@
-﻿using System.Drawing;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Numerics;
 using Bot.AnalysisUtils;
+using Bot.BehaviourTree;
 using Bot.Utilities.Processed.BallPrediction;
 using Bot.Utilities.Processed.FieldInfo;
 using Bot.Utilities.Processed.Packet;
@@ -17,10 +20,13 @@ namespace Bot
 
         public override Controller GetOutput(rlbot.flat.GameTickPacket gameTickPacket)
         {
+            
             // We process the gameTickPacket and convert it to our own internal data structure.
             Packet packet = new Packet(gameTickPacket);
-            // Get the data required to drive to the ball.
             float time = packet.GameInfo.SecondsElapsed;
+            /*
+            // Get the data required to drive to the ball.
+           
             Vector3 ballLocation = packet.Ball.Physics.Location;
             Physics carPhysics = packet.Players[Index].Physics;
             Vector3 carLocation = carPhysics.Location;
@@ -41,6 +47,7 @@ namespace Bot
                 Renderer.DrawLine3D(Color.Gray, ballLocation, ballFutureLocation);
                 Renderer.DrawString3D("Future", Color.Black, ballFutureLocation, 1, 1);
             }
+            */
             PredictionSlice? goalInFuture = BallSimulation.PredictFutureGoal(this.GetBallPrediction());
             if (goalInFuture != null)
             {
@@ -54,15 +61,25 @@ namespace Bot
                 Renderer.DrawString3D("Grounded", Color.LightGreen, groundInFutureLocation, 2, 2);
             }
 
+            List<Node> nodes = new List<Node>();
+            FlipToBall ftb = new FlipToBall();
+            BezierDrive bzd = new BezierDrive();
+            //nodes.Add(ftb);
+            nodes.Add(bzd);
+            
+            PrioritySelector tmpRootNode = new PrioritySelector(nodes);
+            var tmpController = new Controller();
+            var tmpControl = tmpRootNode.Update(this, packet, ref tmpController).controller;
             // Decide which way to steer in order to get to the ball.
             // If the ball is to our left, we steer left. Otherwise we steer right.
 
-
+            /*
             float steer;
             if (ballRelativeLocation.Y > 0)
                 steer = 1;
             else
                 steer = -1;
+            
             
             // Examples of rendering in the game
             Renderer.DrawString3D("Ball", Color.Black, ballLocation, 1, 1);
@@ -76,6 +93,9 @@ namespace Bot
                 Throttle = 1,
                 Steer = steer
             };
+            */
+
+            return tmpControl;
         }
         
         // Hide the old methods that return Flatbuffers objects and use our own methods that
