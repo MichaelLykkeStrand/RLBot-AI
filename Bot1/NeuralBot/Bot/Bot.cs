@@ -8,17 +8,45 @@ using Bot.Utilities.Processed.BallPrediction;
 using Bot.Utilities.Processed.FieldInfo;
 using Bot.Utilities.Processed.Packet;
 using RLBotDotNet;
-
+using System.Threading;
+using System.Windows.Forms;
+using Bot.UI;
 using Bot.Objects;
+using System;
+using Bot.Scenario;
 
 namespace Bot
 {
     // We want to our bot to derive from Bot, and then implement its abstract methods.
     public class Bot : RLBotDotNet.Bot
     {
+        List<Node> _nodes;
+        private PrioritySelector tmpRootNode;
+        public ScenarioController scenarioController = new ScenarioController();
+
+        public List<Node> Nodes { get => _nodes; set => _nodes = value; }
+
         // We want the constructor for our Bot to extend from RLBotDotNet.Bot, but we don't want to add anything to it.
         // You might want to add logging initialisation or other types of setup up here before the bot starts.
-        public Bot(string botName, int botTeam, int botIndex) : base(botName, botTeam, botIndex) { }
+        public Bot(string botName, int botTeam, int botIndex) : base(botName, botTeam, botIndex)
+        {
+            Nodes = new List<Node>();
+            FlipToBall ftb = new FlipToBall();
+            BezierDrive bzd = new BezierDrive();
+            //nodes.Add(ftb);
+            Nodes.Add(bzd);
+            tmpRootNode = new PrioritySelector(Nodes);
+
+            BotTrainerForm botTrainer = new BotTrainerForm(this);
+            Thread thread = new Thread(() =>
+            {
+                Application.Run(botTrainer);
+            });
+            thread.Start();
+
+            scenarioController.Generate();
+
+        }
 
         public override Controller GetOutput(rlbot.flat.GameTickPacket gameTickPacket)
         {
@@ -30,13 +58,6 @@ namespace Bot
             // Updates the game's score, time, etc
             Game.Update(gameTickPacket);
 
-            List<Node> nodes = new List<Node>();
-            FlipToBall ftb = new FlipToBall();
-            BezierDrive bzd = new BezierDrive();
-            //nodes.Add(ftb);
-            nodes.Add(bzd);
-            
-            PrioritySelector tmpRootNode = new PrioritySelector(nodes);
             var tmpController = new Controller();
             var tmpControl = tmpRootNode.Update(this, packet, ref tmpController).controller;
             return tmpControl;
