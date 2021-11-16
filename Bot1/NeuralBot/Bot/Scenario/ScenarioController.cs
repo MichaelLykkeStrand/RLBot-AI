@@ -16,6 +16,7 @@ namespace Bot.Scenario
 
         public void Generate()
         {
+            //Do scenario generation
             OnNewScenarioReady?.Invoke(this, EventArgs.Empty);
         }
     }
