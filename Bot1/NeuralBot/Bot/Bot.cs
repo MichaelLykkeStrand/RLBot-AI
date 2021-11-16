@@ -33,7 +33,7 @@ namespace Bot
             Nodes = new List<Node>();
             FlipToBall ftb = new FlipToBall();
             BezierDrive bzd = new BezierDrive();
-            //nodes.Add(ftb);
+            Nodes.Add(ftb);
             Nodes.Add(bzd);
             tmpRootNode = new PrioritySelector(Nodes);
 
@@ -44,7 +44,6 @@ namespace Bot
             });
             thread.Start();
 
-            scenarioController.Generate();
 
         }
 

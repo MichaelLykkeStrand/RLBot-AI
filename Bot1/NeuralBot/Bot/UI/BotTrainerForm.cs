@@ -16,19 +16,46 @@ namespace Bot.UI
         public BotTrainerForm(Bot bot)
         {
             _bot = bot;
-            bot.scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
             InitializeComponent();
+            bot.scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
+            _bot.scenarioController.Generate();
+            DrawNodes();
         }
 
-        private void ScenarioController_OnNewScenarioReady(object sender, EventArgs e)
+        private void DrawNodes()
         {
+            int xpos = 10;
+            int ypos = 20;
             foreach (var node in _bot.Nodes)
             {
                 RadioButton rb = new RadioButton();
                 rb.Text = node.GetType().Name;
+                rb.Location = new Point(xpos, ypos);
+                ypos += 30;
                 groupBoxStates.Controls.Add(rb);
             }
         }
 
+        private void ScenarioController_OnNewScenarioReady(object sender, EventArgs e)
+        {
+            RadioButton button = groupBoxStates.Controls.OfType<RadioButton>()
+                           .FirstOrDefault(n => n.Checked);
+            if (button != null && button.Checked)
+            {
+                button.Checked = false;
+            }
+        }
+
+
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            RadioButton button = groupBoxStates.Controls.OfType<RadioButton>()
+                           .FirstOrDefault(n => n.Checked);
+            if(button != null)
+            {
+                //Save dataset
+                _bot.scenarioController.Generate();
+            }
+        }
     }
 }
