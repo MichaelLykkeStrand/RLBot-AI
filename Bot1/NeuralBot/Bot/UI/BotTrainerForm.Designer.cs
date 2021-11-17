@@ -35,6 +35,7 @@ namespace Bot.UI
         {
             this.groupBoxStates = new System.Windows.Forms.GroupBox();
             this.submitButton = new System.Windows.Forms.Button();
+            this.playButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // groupBoxStates
@@ -57,11 +58,22 @@ namespace Bot.UI
             this.submitButton.UseVisualStyleBackColor = true;
             this.submitButton.Click += new System.EventHandler(this.SubmitButton_Click);
             // 
+            // playButton
+            // 
+            this.playButton.Location = new System.Drawing.Point(269, 12);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(75, 23);
+            this.playButton.TabIndex = 2;
+            this.playButton.Text = "Play Scenario";
+            this.playButton.UseVisualStyleBackColor = true;
+            this.playButton.Click += new System.EventHandler(this.PlayButton_Click);
+            // 
             // BotTrainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.playButton);
             this.Controls.Add(this.submitButton);
             this.Controls.Add(this.groupBoxStates);
             this.Name = "BotTrainerForm";
@@ -75,5 +87,6 @@ namespace Bot.UI
 
         private System.Windows.Forms.GroupBox groupBoxStates;
         private System.Windows.Forms.Button submitButton;
+        private System.Windows.Forms.Button playButton;
     }
 }

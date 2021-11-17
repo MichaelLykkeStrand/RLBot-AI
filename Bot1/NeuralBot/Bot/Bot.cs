@@ -14,6 +14,7 @@ using Bot.UI;
 using Bot.Objects;
 using System;
 using Bot.Scenario;
+using RLBotDotNet.GameState;
 
 namespace Bot
 {
@@ -22,7 +23,10 @@ namespace Bot
     {
         List<Node> _nodes;
         private PrioritySelector tmpRootNode;
-        public ScenarioController scenarioController = new ScenarioController();
+        public ScenarioController scenarioController;
+        private bool hasNewState = false;
+        private bool playScenario = false;
+
 
         public List<Node> Nodes { get => _nodes; set => _nodes = value; }
 
@@ -30,6 +34,9 @@ namespace Bot
         // You might want to add logging initialisation or other types of setup up here before the bot starts.
         public Bot(string botName, int botTeam, int botIndex) : base(botName, botTeam, botIndex)
         {
+            scenarioController = new ScenarioController(this);
+            scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
+            scenarioController.OnPlayScenario += ScenarioController_OnPlayScenario;
             Nodes = new List<Node>();
             FlipToBall ftb = new FlipToBall();
             BezierDrive bzd = new BezierDrive();
@@ -47,9 +54,31 @@ namespace Bot
 
         }
 
+        private void ScenarioController_OnPlayScenario(object sender, EventArgs e)
+        {
+            playScenario = true;
+        }
+
+        private void ScenarioController_OnNewScenarioReady(object sender, EventArgs e)
+        {
+            hasNewState = true;
+        }
+
         public override Controller GetOutput(rlbot.flat.GameTickPacket gameTickPacket)
         {
-            
+            if (hasNewState)
+            {
+                hasNewState = false;
+                SetGameState(scenarioController.currentState);
+            }
+
+            if (playScenario)
+            {
+                playScenario = false;
+                GameState gameState = scenarioController.currentState;
+                gameState.GameInfoState.Paused = false;
+                SetGameState(gameState);
+            }
             // We process the gameTickPacket and convert it to our own internal data structure.
             Packet packet = new Packet(gameTickPacket);
             // Updates the ball's position, velocity, etc

@@ -57,5 +57,10 @@ namespace Bot.UI
                 _bot.scenarioController.Generate();
             }
         }
+
+        private void PlayButton_Click(object sender, EventArgs e)
+        {
+            _bot.scenarioController.PlayScenario();
+        }
     }
 }
