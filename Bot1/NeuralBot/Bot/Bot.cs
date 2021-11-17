@@ -15,6 +15,7 @@ using Bot.Objects;
 using System;
 using Bot.Scenario;
 using RLBotDotNet.GameState;
+using System.Runtime.ExceptionServices;
 
 namespace Bot
 {
@@ -24,8 +25,6 @@ namespace Bot
         List<Node> _nodes;
         private PrioritySelector tmpRootNode;
         public ScenarioController scenarioController;
-        private bool hasNewState = false;
-        private bool playScenario = false;
 
 
         public List<Node> Nodes { get => _nodes; set => _nodes = value; }
@@ -54,31 +53,32 @@ namespace Bot
 
         }
 
+        [HandleProcessCorruptedStateExceptions]
         private void ScenarioController_OnPlayScenario(object sender, EventArgs e)
         {
-            playScenario = true;
+            try
+            {
+                GameState gameState = scenarioController.currentState;
+                gameState.GameInfoState.Paused = false;
+                SetGameState(gameState);
+                
+            }
+            catch (Exception) { }
+            
         }
-
+        [HandleProcessCorruptedStateExceptions]
         private void ScenarioController_OnNewScenarioReady(object sender, EventArgs e)
         {
-            hasNewState = true;
+            try
+            {
+                SetGameState(scenarioController.currentState);
+            }
+            catch (Exception) { }
+
         }
 
         public override Controller GetOutput(rlbot.flat.GameTickPacket gameTickPacket)
         {
-            if (hasNewState)
-            {
-                hasNewState = false;
-                SetGameState(scenarioController.currentState);
-            }
-
-            if (playScenario)
-            {
-                playScenario = false;
-                GameState gameState = scenarioController.currentState;
-                gameState.GameInfoState.Paused = false;
-                SetGameState(gameState);
-            }
             // We process the gameTickPacket and convert it to our own internal data structure.
             Packet packet = new Packet(gameTickPacket);
             // Updates the ball's position, velocity, etc
