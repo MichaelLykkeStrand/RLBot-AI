@@ -60,9 +60,9 @@ namespace Bot.UI
             // 
             // playButton
             // 
-            this.playButton.Location = new System.Drawing.Point(269, 12);
+            this.playButton.Location = new System.Drawing.Point(255, 12);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(75, 23);
+            this.playButton.Size = new System.Drawing.Size(127, 23);
             this.playButton.TabIndex = 2;
             this.playButton.Text = "Play Scenario";
             this.playButton.UseVisualStyleBackColor = true;
