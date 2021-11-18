@@ -11,7 +11,7 @@ namespace Bot.Scenario
 {
     public static class ScenarioUtils
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
         public static CarState GetRandomCarState()
         {
             float rotation = random.Next(0, (int)Math.PI * 10000) / 10000;
