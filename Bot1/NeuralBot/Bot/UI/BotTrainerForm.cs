@@ -13,7 +13,7 @@ namespace Bot.UI
     public partial class BotTrainerForm : Form
     {
         private Bot _bot;
-        public BotTrainerForm(Bot bot)
+        public BotTrainerForm(Bot bot) //Replace bot reference with ScenarioController reference
         {
             _bot = bot;
             InitializeComponent();
