@@ -1,4 +1,5 @@
-﻿using Bot.Utilities.Processed.Packet;
+﻿using Bot.Objects;
+using Bot.Utilities.Processed.Packet;
 using RLBotDotNet;
 using System.Numerics;
 
@@ -16,10 +17,12 @@ namespace Bot.BehaviourTree
             if (packet.Players[agent.Index].Boost != 0)
             {
                 output.Boost = true;
+                Game.OutoutControls = output;
                 return State.SUCCESS;
             }
 
             output.Boost = false;
+            Game.OutoutControls = output;
             return State.FAILURE;
         }
     }

@@ -78,14 +78,13 @@
     <Compile Include="ANN\DataSet.cs" />
     <Compile Include="ANN\Neuron.cs" />
     <Compile Include="ANN\Synapse.cs" />
-    <Compile Include="BehaviourTree\ActionNode.cs" />
-    <Compile Include="BehaviourTree\BezierDrive.cs" />
-    <Compile Include="BehaviourTree\FlipToBall.cs" />
+    <Compile Include="BehaviourTree\Actions\ActionNode.cs" />
+    <Compile Include="BehaviourTree\Actions\BezierDrive.cs" />
+    <Compile Include="BehaviourTree\Actions\FlipToBall.cs" />
     <Compile Include="BehaviourTree\Node.cs" />
-    <Compile Include="BehaviourTree\NodeResult.cs" />
-    <Compile Include="BehaviourTree\PrioritySelector.cs" />
-    <Compile Include="BehaviourTree\Selector.cs" />
-    <Compile Include="BehaviourTree\Sequence.cs" />
+    <Compile Include="BehaviourTree\Selectors\PrioritySelector.cs" />
+    <Compile Include="BehaviourTree\Selectors\Selector.cs" />
+    <Compile Include="BehaviourTree\Sequences\Sequence.cs" />
     <Compile Include="BezierUtils\Bezier.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Objects\Ball.cs" />
@@ -126,6 +125,9 @@
     <EmbeddedResource Include="UI\BotTrainerForm.resx">
       <DependentUpon>BotTrainerForm.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BehaviourTree\Decorators\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

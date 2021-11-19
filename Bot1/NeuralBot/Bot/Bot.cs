@@ -39,7 +39,7 @@ namespace Bot
             Nodes = new List<Node>();
             FlipToBall ftb = new FlipToBall();
             BezierDrive bzd = new BezierDrive();
-            Nodes.Add(ftb);
+            //Nodes.Add(ftb);
             Nodes.Add(bzd);
             tmpRootNode = new PrioritySelector(Nodes);
 
@@ -85,10 +85,8 @@ namespace Bot
             Objects.Ball.Update(this, gameTickPacket.Ball.Value);
             // Updates the game's score, time, etc
             Game.Update(gameTickPacket);
-
-            var tmpController = new Controller();
-            var tmpControl = tmpRootNode.Update(this, packet, ref tmpController).controller;
-            return tmpControl;
+            var state = tmpRootNode.Update(this, packet);
+            return Game.OutoutControls;
         }
         
         // Hide the old methods that return Flatbuffers objects and use our own methods that

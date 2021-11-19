@@ -11,10 +11,7 @@ namespace Bot.BehaviourTree
     class PrioritySelector : Selector
     {
 
-        public PrioritySelector(List<Node> nodes) : base(nodes)
-        {
-            
-        }
+        public PrioritySelector(List<Node> nodes) : base(nodes) { }
 
         //Evaluate state of child nodes
         public override State Update(Bot agent, Packet packet)
