@@ -19,7 +19,7 @@ namespace Bot.BehaviourTree
 {
     class BezierDrive : ActionNode
     {
-        public override NodeResult Update(Bot agent, Packet packet, ref Controller output)
+        public override State Update(Bot agent, Packet packet)
         {
             float time = Game.Time;
             Physics carPhysics = packet.Players[agent.Index].Physics;
@@ -51,22 +51,19 @@ namespace Bot.BehaviourTree
                 agent.Renderer.DrawLine3D(Color.Gray, ballLocation, ballFutureLocation);
                 agent.Renderer.DrawString3D("Future", Color.Black, ballFutureLocation, 1, 1);
             }
-            
+
+            Controller controller = new Controller();
             float steer;
             if (ballRelativeLocation.Y > 0)
-                output.Steer = 1;
+                controller.Steer = 1;
             else
-                output.Steer = -1;
+                controller.Steer = -1;
 
-            output.Throttle = 1;
+            controller.Throttle = 1;
 
-            NodeResult tmpResult = new NodeResult
-            {
-                nodeState = State.SUCCESS,
-                controller = output
-            };
+            //TODO set controller on game
 
-            return tmpResult;
+            return State.SUCCESS;
         }
     }
 }
