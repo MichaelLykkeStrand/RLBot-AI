@@ -19,26 +19,23 @@ namespace Bot.UI
             InitializeComponent();
             bot.scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
             _bot.scenarioController.Generate();
-            DrawNodes();
+            InitializeStateButtons();
         }
 
-        private void DrawNodes()
+        private void InitializeStateButtons()
         {
-            int xpos = 10;
-            int ypos = 20;
+
             foreach (var node in _bot.Nodes)
             {
                 RadioButton rb = new RadioButton();
                 rb.Text = node.GetType().Name;
-                rb.Location = new Point(xpos, ypos);
-                ypos += 30;
-                groupBoxStates.Controls.Add(rb);
+                statePanel.Controls.Add(rb);
             }
         }
 
         private void ScenarioController_OnNewScenarioReady(object sender, EventArgs e)
         {
-            RadioButton button = groupBoxStates.Controls.OfType<RadioButton>()
+            RadioButton button = statePanel.Controls.OfType<RadioButton>()
                            .FirstOrDefault(n => n.Checked);
             if (button != null && button.Checked)
             {
@@ -49,7 +46,7 @@ namespace Bot.UI
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            RadioButton button = groupBoxStates.Controls.OfType<RadioButton>()
+            RadioButton button = statePanel.Controls.OfType<RadioButton>()
                            .FirstOrDefault(n => n.Checked);
             if(button != null)
             {
