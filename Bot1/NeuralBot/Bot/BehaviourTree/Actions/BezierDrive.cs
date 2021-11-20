@@ -14,6 +14,7 @@ using PredictionSlice = Bot.Utilities.Processed.BallPrediction.PredictionSlice;
 using Vector3 = System.Numerics.Vector3;
 using Bot.Objects;
 using Ball = Bot.Objects.Ball;
+using Bot.MathUtils;
 
 namespace Bot.BehaviourTree
 {
@@ -21,6 +22,7 @@ namespace Bot.BehaviourTree
     {
         const float correctionDiff = 0.5f;
         const float failureDistance = 1000f;
+        const float maxDistance = 5000f;
         protected List<Vector3> _path;
         private float latestTouchMemory = float.MinValue;
         private float lastUpdate = 0;
@@ -33,16 +35,18 @@ namespace Bot.BehaviourTree
             Vector3 ballLocation = packet.Ball.Physics.Location;
             Orientation carRotation = packet.Players[agent.Index].Physics.Rotation;
             Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
-            PredictionSlice? ballInFuture = BallSimulation.FindSliceAtTime(agent.GetBallPrediction(), time+0.2f);
+            float distance = Vector3.Distance(carLocation, ballLocation);
+            float timeoffset = distance.Remap(0, maxDistance, 0, 4);
+            PredictionSlice? ballInFuture = BallSimulation.FindSliceAtTime(agent.GetBallPrediction(), time + timeoffset);
             
+
+
             if (ballInFuture != null)
             {
-                
-                var wht = agent.GetFieldInfo().Goals[agent.Team].Location;
                 var ballFutureLocation = (Vector3)ballInFuture?.Physics.Location;
-                var distance = Vector3.Distance(carLocation, ballFutureLocation);
+                var distanceToFuture = Vector3.Distance(carLocation, ballFutureLocation);
                 
-                if (distance < failureDistance) //Move to other node
+                if (distanceToFuture < failureDistance) //Move to other node
                 {
                     return State.FAILURE;
                 }
