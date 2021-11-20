@@ -16,6 +16,7 @@ using System;
 using Bot.Scenario;
 using RLBotDotNet.GameState;
 using System.Runtime.ExceptionServices;
+using Bot.BehaviourTree.Actions;
 
 namespace Bot
 {
@@ -37,10 +38,12 @@ namespace Bot
             scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
             scenarioController.OnPlayScenario += ScenarioController_OnPlayScenario;
             Nodes = new List<Node>();
-            FlipToBall ftb = new FlipToBall();
+            Dribble dribble = new Dribble();
+            //FlipToBall ftb = new FlipToBall();
             BezierDrive bzd = new BezierDrive();
             //Nodes.Add(ftb);
             Nodes.Add(bzd);
+            Nodes.Add(dribble);
             tmpRootNode = new PrioritySelector(Nodes);
 
             BotTrainerForm botTrainer = new BotTrainerForm(this);

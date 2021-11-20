@@ -35,5 +35,28 @@ namespace Bot.Objects
 
 			return new Vector3(x, y, z);
 		}
+
+		public static Vector3 GetOpponentGoal(Bot agent)
+        {
+			if (agent.Team == 0)
+			{
+				return agent.GetFieldInfo().Goals[1].Location;
+			}
+			else
+			{
+				return agent.GetFieldInfo().Goals[0].Location;
+			}
+		}
+		public static Vector3 GetMyGoal(Bot agent)
+		{
+			if (agent.Team == 1)
+			{
+				return agent.GetFieldInfo().Goals[1].Location;
+			}
+			else
+			{
+				return agent.GetFieldInfo().Goals[0].Location;
+			}
+		}
 	}
 }

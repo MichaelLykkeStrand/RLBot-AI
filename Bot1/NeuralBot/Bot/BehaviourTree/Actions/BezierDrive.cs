@@ -44,27 +44,10 @@ namespace Bot.BehaviourTree
                 
                 if (distance < failureDistance) //Move to other node
                 {
-                    Controller closeControls = new Controller();
-                    if (ballRelativeLocation.Y > correctionDiff)
-                        closeControls.Steer = 1;
-                    else if (ballRelativeLocation.Y < -correctionDiff)
-                        closeControls.Steer = -1;
-                    closeControls.Throttle = 1;
-                    Game.OutoutControls = closeControls;
-                    return State.SUCCESS;
-                }
-                
-                Vector3 goalPos = Vector3.Zero;
-                if (agent.Team == 0) //move this logic to own class or move it up to parent class + it is duplicate?
-                {
-                    goalPos = agent.GetFieldInfo().Goals[1].Location;
-                }
-                else
-                {
-                    goalPos = agent.GetFieldInfo().Goals[0].Location;
+                    return State.FAILURE;
                 }
 
-
+                Vector3 goalPos = Field.GetOpponentGoal(agent);
                 try
                 {
                     if (Ball.LatestTouch.Time != latestTouchMemory || lastUpdate+1.5f < Game.Time)
@@ -82,11 +65,12 @@ namespace Bot.BehaviourTree
 
                 // Find where the ball is relative to us.
 
-
                 List<Vector3> removeList = new List<Vector3>();
                 foreach (Vector3 position in _path)
                 {
-                    if (Vector3.Distance(carLocation, position) < 500f)
+                    //Check if the point position is behind the car or if passed point already
+                    float x = Orientation.RelativeLocation(carLocation, position, carRotation).X;
+                    if (Vector3.Distance(carLocation, position) < 500f || x < 0)
                     {
                         removeList.Add(position);
                     }
@@ -102,7 +86,9 @@ namespace Bot.BehaviourTree
                 {
                     _path = CarSimulation.GetBezierCurve(carPhysics, ballInFuture?.Physics, goalPos, agent.Renderer);
                 }
-                
+
+                RenderPath(_path, agent.Renderer);
+
                 agent.Renderer.DrawString3D("NextMove", Color.White, targetPos, 2, 2);
                 ballRelativeLocation = Orientation.RelativeLocation(carLocation, targetPos, carRotation);
                 agent.Renderer.DrawLine3D(Color.Gray, ballLocation, ballFutureLocation);
@@ -120,6 +106,20 @@ namespace Bot.BehaviourTree
             Game.OutoutControls = controller;
 
             return State.SUCCESS;
+        }
+
+        private void RenderPath(List<Vector3> path, Renderer r)
+        {
+            for (int i = 0; i < path.Count; i++)
+            {
+                try
+                {
+                    r.DrawLine3D(Color.White, path[i], path[i+1]);
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
     }
 }
