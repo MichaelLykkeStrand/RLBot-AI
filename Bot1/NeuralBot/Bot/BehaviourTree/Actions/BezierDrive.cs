@@ -98,7 +98,7 @@ namespace Bot.BehaviourTree
                 agent.Renderer.DrawLine3D(Color.Gray, ballLocation, ballFutureLocation);
                 agent.Renderer.DrawString3D("Future", Color.Black, ballFutureLocation, 1, 1);
             }
-
+            //Move the movement code to new follower script - movement should not be here
             Controller controller = new Controller();
             if (ballRelativeLocation.Y > correctionDiff)
                 controller.Steer = 1;
