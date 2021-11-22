@@ -23,7 +23,7 @@ namespace Bot.BehaviourTree
             get { return _state; }
         }
 
-        public abstract NodeResult Update(Bot agent, Packet packet, ref Controller output);
+        public abstract State Update(Bot agent, Packet packet);
 
         public virtual void Deserialize(JObject source)
         {

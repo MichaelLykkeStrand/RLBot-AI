@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using RLBotDotNet;
 
 //https://github.com/ItsCodeRed/RedUtils
 namespace Bot.Objects
@@ -35,6 +36,8 @@ namespace Bot.Objects
 		public static bool IsKickoffPause { get; private set; }
 		/// <summary>Whether or not the game has concluded</summary>
 		public static bool IsMatchEnded { get; private set; }
+
+		public static Controller OutoutControls { get; set; }
 
 		/// <summary>The acceleration caused by gravity</summary>
 		public static Vector3 Gravity { get; private set; }

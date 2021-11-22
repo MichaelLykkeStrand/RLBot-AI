@@ -14,37 +14,28 @@ namespace Bot.BehaviourTree
         public Sequence() : base () { }
         public Sequence(List<Node> nodes) : base (nodes) { }
 
-        public override NodeResult Update(Bot agent, Packet packet,ref Controller output)
+        public override State Update(Bot agent, Packet packet)
         {
-            Controller tmpOutput = output;
             bool hasRunningChild = false;
             foreach (var node in m_nodes)
             {
-                NodeResult nodeUpdate = node.Update(agent, packet, ref output);
-                switch (nodeUpdate.nodeState)
+                switch (node.Update(agent,packet))
                 {
                     case State.FAILURE:
                         _state = State.FAILURE;
-                        return nodeUpdate;
+                        return _state;
                     case State.SUCCESS:
-                        tmpOutput = nodeUpdate.controller;
                         continue;
                     case State.RUNNING:
                         hasRunningChild = true;
-                        tmpOutput = nodeUpdate.controller;
                         continue;
                     default:
                         _state = State.SUCCESS;
-                        return nodeUpdate;
+                        return _state;
                 }
             }
             _state = hasRunningChild ? State.RUNNING : State.SUCCESS;
-            var tmpResult = new NodeResult
-            {
-                nodeState = _state,
-                controller = tmpOutput
-            };
-            return tmpResult;
+            return _state;
         }
     }
 }

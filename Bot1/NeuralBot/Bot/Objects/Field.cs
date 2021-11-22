@@ -23,5 +23,40 @@ namespace Bot.Objects
 		public const float CornerLength = 1629;
 		/// <summary>The length of the corners on the x axis or y axis</summary>
 		public const float CornerWidth = 1152;
+
+		private static Random random = new Random();
+
+		public static Vector3 GetRandomPosition()
+        {
+			
+			float x = random.Next((int)-Field.Width / 2, (int)Field.Width / 2);
+			float y = random.Next((int)-Field.Length / 2, (int)Field.Length / 2);
+			float z = 0.2f;
+
+			return new Vector3(x, y, z);
+		}
+
+		public static Vector3 GetOpponentGoal(Bot agent)
+        {
+			if (agent.Team == 0)
+			{
+				return agent.GetFieldInfo().Goals[1].Location;
+			}
+			else
+			{
+				return agent.GetFieldInfo().Goals[0].Location;
+			}
+		}
+		public static Vector3 GetMyGoal(Bot agent)
+		{
+			if (agent.Team == 1)
+			{
+				return agent.GetFieldInfo().Goals[1].Location;
+			}
+			else
+			{
+				return agent.GetFieldInfo().Goals[0].Location;
+			}
+		}
 	}
 }

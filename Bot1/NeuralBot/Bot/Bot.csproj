@@ -65,11 +65,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -79,17 +81,18 @@
     <Compile Include="ANN\DataSet.cs" />
     <Compile Include="ANN\Neuron.cs" />
     <Compile Include="ANN\Synapse.cs" />
-    <Compile Include="BehaviourTree\ActionNode.cs" />
-    <Compile Include="BehaviourTree\BezierDrive.cs" />
-    <Compile Include="BehaviourTree\CompositeNode.cs" />
-    <Compile Include="BehaviourTree\FlipToBall.cs" />
+    <Compile Include="BehaviourTree\Actions\ActionNode.cs" />
+    <Compile Include="BehaviourTree\Actions\BezierDrive.cs" />
+    <Compile Include="BehaviourTree\Actions\Dribble.cs" />
+    <Compile Include="BehaviourTree\Actions\FlipToBall.cs" />
+    <Compile Include="BehaviourTree\Actions\Recover.cs" />
     <Compile Include="BehaviourTree\Node.cs" />
-    <Compile Include="BehaviourTree\NodeResult.cs" />
-    <Compile Include="BehaviourTree\PrioritySelector.cs" />
-    <Compile Include="BehaviourTree\Selector.cs" />
-    <Compile Include="BehaviourTree\Sequence.cs" />
+    <Compile Include="BehaviourTree\Selectors\PrioritySelector.cs" />
+    <Compile Include="BehaviourTree\Selectors\Selector.cs" />
+    <Compile Include="BehaviourTree\Sequences\Sequence.cs" />
     <Compile Include="BezierUtils\Bezier.cs" />
     <Compile Include="Bot.cs" />
+    <Compile Include="MathUtils\Remapper.cs" />
     <Compile Include="ISerializable.cs" />
     <Compile Include="Objects\Ball.cs" />
     <Compile Include="Objects\BallTouch.cs" />
@@ -97,6 +100,14 @@
     <Compile Include="Objects\Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scenario\ScenarioController.cs" />
+    <Compile Include="Scenario\ScenarioUtils.cs" />
+    <Compile Include="UI\BotTrainerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\BotTrainerForm.Designer.cs">
+      <DependentUpon>BotTrainerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Serialization.cs" />
     <Compile Include="Utilities\CarAgent.cs" />
     <Compile Include="Utilities\DataConversion.cs" />
@@ -118,6 +129,13 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="UI\BotTrainerForm.resx">
+      <DependentUpon>BotTrainerForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BehaviourTree\Decorators\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
