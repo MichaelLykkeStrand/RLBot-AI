@@ -1,4 +1,5 @@
 ﻿using Bot.Utilities.Processed.Packet;
+using Newtonsoft.Json.Linq;
 using RLBotDotNet;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,10 @@ using System.Threading.Tasks;
 
 namespace Bot.BehaviourTree
 {
-    class Sequence : Node
+    class Sequence : CompositeNode
     {
-        private List<Node> m_nodes = new List<Node>();
-        public Sequence(List<Node> nodes)
-        {
-            m_nodes = nodes;
-        }
+        public Sequence() : base () { }
+        public Sequence(List<Node> nodes) : base (nodes) { }
 
         public override NodeResult Update(Bot agent, Packet packet,ref Controller output)
         {

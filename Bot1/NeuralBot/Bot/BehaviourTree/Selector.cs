@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bot.BehaviourTree
 {
-    public abstract class Selector : Node
+    public abstract class Selector : CompositeNode
     {
-        //Child nodes
-        protected List<Node> m_nodes = new List<Node>();
-
-        public Selector(List<Node> nodes)
-        {
-            m_nodes = nodes;
-        }
+        public Selector() : base() { }
+        public Selector(List<Node> nodes) : base(nodes) { }
     }
 }
