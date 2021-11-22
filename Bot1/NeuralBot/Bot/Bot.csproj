@@ -83,6 +83,8 @@
     <Compile Include="ANN\Synapse.cs" />
     <Compile Include="BehaviourTree\Actions\ActionNode.cs" />
     <Compile Include="BehaviourTree\Actions\BezierDrive.cs" />
+    <Compile Include="BehaviourTree\Actions\Boost.cs" />
+    <Compile Include="BehaviourTree\Actions\CollectBoost.cs" />
     <Compile Include="BehaviourTree\Actions\Dribble.cs" />
     <Compile Include="BehaviourTree\Actions\FlipToBall.cs" />
     <Compile Include="BehaviourTree\Actions\Recover.cs" />

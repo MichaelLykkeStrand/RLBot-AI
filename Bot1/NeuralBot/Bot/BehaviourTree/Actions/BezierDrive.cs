@@ -38,8 +38,6 @@ namespace Bot.BehaviourTree
             float distance = Vector3.Distance(carLocation, ballLocation);
             float timeoffset = distance.Remap(0, maxDistance, 0, 4);
             PredictionSlice? ballInFuture = BallSimulation.FindSliceAtTime(agent.GetBallPrediction(), time + timeoffset);
-            
-
 
             if (ballInFuture != null)
             {

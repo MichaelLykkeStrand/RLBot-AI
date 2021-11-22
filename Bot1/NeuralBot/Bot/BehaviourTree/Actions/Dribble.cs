@@ -31,22 +31,32 @@ namespace Bot.BehaviourTree.Actions
 
             if (distance < successDistance) //TODO check if ball is near ground
             {
-                Controller closeControls = new Controller();
+                Controller closeControls = Game.OutoutControls;
                 if (ballRelativeLocation.Y > correctionDiff)
+                {
                     closeControls.Steer = 1;
+                }  
                 else if (ballRelativeLocation.Y < -correctionDiff)
+                {
                     closeControls.Steer = -1;
+                }
+                else
+                {
+                    closeControls.Boost = true;
+                }
 
                 var prediction = BallSimulation.FindSliceWhereBallIsGrounded(Objects.Ball.Prediction,0.5f);
                 var nextGround = prediction?.Physics.Location;
                 if (nextGround != null || ballLocation.Z < 120)
                 {
                     closeControls.Throttle = 1;
+                    closeControls.Boost = false;
                 }
                 else
                 {
                     float throttle = distance.Remap(0, successDistance, 0, 1);
                     closeControls.Throttle = throttle;
+                    
                 }
                 
                 Game.OutoutControls = closeControls;

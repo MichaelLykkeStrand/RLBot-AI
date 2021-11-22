@@ -44,6 +44,7 @@ namespace Bot
             BezierDrive bzd = new BezierDrive();
             //Nodes.Add(ftb);
             Nodes.Add(recover);
+            Nodes.Add(new CollectBoost());
             Nodes.Add(bzd);
             Nodes.Add(dribble);
             tmpRootNode = new PrioritySelector(Nodes);

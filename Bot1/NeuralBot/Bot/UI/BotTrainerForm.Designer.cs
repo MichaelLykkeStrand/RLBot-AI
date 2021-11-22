@@ -62,7 +62,7 @@ namespace Bot.UI
             // 
             this.statePanel.Location = new System.Drawing.Point(12, 12);
             this.statePanel.Name = "statePanel";
-            this.statePanel.Size = new System.Drawing.Size(200, 100);
+            this.statePanel.Size = new System.Drawing.Size(200, 426);
             this.statePanel.TabIndex = 3;
             // 
             // BotTrainerForm

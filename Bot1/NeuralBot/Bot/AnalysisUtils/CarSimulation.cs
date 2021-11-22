@@ -39,7 +39,7 @@ namespace Bot.AnalysisUtils
             {
                 time += 0.1f;
                 Vector3 p1 = bezier.CubicBezier(time, carPos, bezierControl1, bezierControl2, ballPos);
-                Vector3 p2 = bezier.CubicBezier(time + 0.1f, carPos, bezierControl1, bezierControl2, ballPos);
+                //Vector3 p2 = bezier.CubicBezier(time + 0.1f, carPos, bezierControl1, bezierControl2, ballPos);
                 path.Add(p1);
             }
             return path;
