@@ -10,6 +10,9 @@ namespace Bot.BehaviourTree
 {
     class PrioritySelector : Selector
     {
+        public PrioritySelector() : base()
+        {
+        }
 
         public PrioritySelector(List<Node> nodes) : base(nodes)
         {

@@ -1,4 +1,5 @@
 ﻿using Bot.Utilities.Processed.Packet;
+using Newtonsoft.Json.Linq;
 using RLBotDotNet;
 using System;
 
@@ -13,7 +14,7 @@ namespace Bot.BehaviourTree
     }
 
     [Serializable]
-    public abstract class Node
+    public abstract class Node : ISerializable
     {
         protected State _state;
 
@@ -24,5 +25,13 @@ namespace Bot.BehaviourTree
 
         public abstract NodeResult Update(Bot agent, Packet packet, ref Controller output);
 
+        public virtual void Deserialize(JObject source)
+        {
+        }
+
+        public virtual JObject Serialize()
+        {
+            return new JObject();
+        }
     }
 }
