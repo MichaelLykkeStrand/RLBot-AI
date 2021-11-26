@@ -22,9 +22,6 @@ namespace Bot.UI
         }
 
 
-
-
-
         #region Windows Form Designer generated code
 
         /// <summary>
