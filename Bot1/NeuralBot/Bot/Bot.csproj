@@ -90,6 +90,7 @@
     <Compile Include="BehaviourTree\Actions\Recover.cs" />
     <Compile Include="BehaviourTree\CompositeNode.cs" />
     <Compile Include="BehaviourTree\Node.cs" />
+    <Compile Include="BehaviourTree\Selectors\NeuralSelector.cs" />
     <Compile Include="BehaviourTree\Selectors\PrioritySelector.cs" />
     <Compile Include="BehaviourTree\Selectors\Selector.cs" />
     <Compile Include="BehaviourTree\Sequences\Sequence.cs" />
