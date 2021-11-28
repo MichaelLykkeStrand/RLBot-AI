@@ -43,11 +43,13 @@ namespace Bot.BehaviourTree.Actions
                         }
                         agent.Renderer.DrawString2D("Y: " + relativeLocation.Y, Color.Yellow,new Vector2(20,100), 1, 1);
                         Game.OutoutControls = controls;
-                        return State.SUCCESS;
+                        _state = State.SUCCESS;
+                        return _state;
                     }
                 }
             }
-            return State.FAILURE;
+            _state = State.FAILURE;
+            return _state;
         }
     }
 }

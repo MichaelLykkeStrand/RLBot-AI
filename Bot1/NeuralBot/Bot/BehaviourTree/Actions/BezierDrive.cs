@@ -46,7 +46,8 @@ namespace Bot.BehaviourTree
                 
                 if (distanceToFuture < failureDistance) //Move to other node
                 {
-                    return State.FAILURE;
+                    _state = State.FAILURE;
+                    return _state;
                 }
 
                 Vector3 goalPos = Field.GetOpponentGoal(agent);
@@ -106,8 +107,8 @@ namespace Bot.BehaviourTree
 
             //TODO set controller on game
             Game.OutoutControls = controller;
-
-            return State.SUCCESS;
+            _state = State.SUCCESS;
+            return _state;
         }
 
         private void RenderPath(List<Vector3> path, Renderer r)

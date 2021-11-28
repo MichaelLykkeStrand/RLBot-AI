@@ -60,9 +60,11 @@ namespace Bot.BehaviourTree.Actions
                 }
                 
                 Game.OutoutControls = closeControls;
-                return State.SUCCESS;
+                _state = State.SUCCESS;
+                return _state;
             }
-            return State.FAILURE;
+            _state = State.FAILURE;
+            return _state;
 
         }
     }
