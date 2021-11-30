@@ -56,11 +56,11 @@ namespace Bot.BehaviourTree.Actions
                     Abs(VectorUtils.Angle(VectorUtils.Flatten(carToBall), VectorUtils.Flatten(aimDirection)) * 2560);
                 var finalTarget = Vector3.Add(ballPosOffset, Vector3.Multiply(carToBallPerpendicular, adjustment));
                 //Control
-                
+                var targetRelativeLocation = Orientation.RelativeLocation(carLocation, finalTarget, carRotation);
                 //AIM DRIBBLE IMPLEMENTATION END
-                if (ballRelativeLocation.Y > correctionDiff)
+                if (targetRelativeLocation.Y > correctionDiff)
                     closeControls.Steer = 1;
-                else if (ballRelativeLocation.Y < -correctionDiff)
+                else if (targetRelativeLocation.Y < -correctionDiff)
                     closeControls.Steer = -1;
 
                 var prediction = BallSimulation.FindSliceWhereBallIsGrounded(Objects.Ball.Prediction,0.5f);
