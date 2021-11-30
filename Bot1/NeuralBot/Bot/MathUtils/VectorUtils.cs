@@ -41,7 +41,7 @@ namespace Bot.MathUtils
             return (float)angle;
         }
 
-        private static double Magnitude(Vector3 v)
+        public static double Magnitude(Vector3 v)
         {
             return Math.Sqrt(Math.Pow(v.X, 2) + Math.Pow(v.Y, 2) + Math.Pow(v.Z, 2));
         }

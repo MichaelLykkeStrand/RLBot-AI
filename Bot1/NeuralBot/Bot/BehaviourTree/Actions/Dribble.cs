@@ -57,7 +57,15 @@ namespace Bot.BehaviourTree.Actions
                 var finalTarget = Vector3.Add(ballPosOffset, Vector3.Multiply(carToBallPerpendicular, adjustment));
                 //Control
                 var targetRelativeLocation = Orientation.RelativeLocation(carLocation, finalTarget, carRotation);
+                //This assumes no boost - dumb
+                //var approximateRemainingDistance = VectorUtils.Magnitude(Vector3.Subtract(finalTarget, carLocation));
+                //var timeRemaining = 
+                //if (expr)
+                //{
+                //    
+                //}
                 //AIM DRIBBLE IMPLEMENTATION END
+                //TODO REDO THE FOLLOWING CONTROL CODE TO BETTER MATCH AIMING IMPLEMENTATION :)
                 if (targetRelativeLocation.Y > correctionDiff)
                     closeControls.Steer = 1;
                 else if (targetRelativeLocation.Y < -correctionDiff)
