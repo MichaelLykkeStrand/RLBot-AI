@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bot.BehaviourTree.Selectors;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -24,12 +25,19 @@ namespace Bot.UI
 
         private void InitializeStateButtons()
         {
-
             foreach (var node in _bot.Nodes)
             {
-                RadioButton rb = new RadioButton();
-                rb.Text = node.GetType().Name;
-                statePanel.Controls.Add(rb);
+                if(node.GetType() == typeof(NeuralSelector))
+                {
+                    NeuralSelector neuralSelector = (NeuralSelector)node;
+                    foreach (var child in neuralSelector.Nodes)
+                    {
+                        RadioButton rb = new RadioButton();
+                        rb.Text = child.GetType().Name;
+                        statePanel.Controls.Add(rb);
+                    }
+                }
+
             }
         }
 

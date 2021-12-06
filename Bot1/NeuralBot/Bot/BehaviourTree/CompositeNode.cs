@@ -9,7 +9,7 @@ namespace Bot.BehaviourTree
 {
     public abstract class CompositeNode : Node
     {
-        protected List<Node> m_nodes = new List<Node>();
+        private List<Node> nodes = new List<Node>();
 
         public CompositeNode()
         {
@@ -17,19 +17,21 @@ namespace Bot.BehaviourTree
 
         public CompositeNode(List<Node> nodes)
         {
-            m_nodes = nodes;
+            Nodes = nodes;
         }
+
+        public List<Node> Nodes { get => nodes; set => nodes = value; }
 
         public override void Deserialize(JObject source)
         {
-            m_nodes = source["Children"].Select(x => Serialization.DeserializeObject<Node>((JObject)x)).ToList();
+            Nodes = source["Children"].Select(x => Serialization.DeserializeObject<Node>((JObject)x)).ToList();
         }
 
         public override JObject Serialize()
         {
             return new JObject()
             {
-                { "Children", new JArray(m_nodes.Select(x => Serialization.SerializeObject(x)).ToArray()) }
+                { "Children", new JArray(Nodes.Select(x => Serialization.SerializeObject(x)).ToArray()) }
             };
         }
     }

@@ -16,7 +16,7 @@ namespace Bot.BehaviourTree
         //Evaluate state of child nodes
         public override State Update(Bot agent, Packet packet)
         {
-            foreach (Node node in m_nodes)
+            foreach (Node node in Nodes)
             {
                 switch (node.Update(agent, packet))
                 {

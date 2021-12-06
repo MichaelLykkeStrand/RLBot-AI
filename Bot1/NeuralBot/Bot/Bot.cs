@@ -26,7 +26,7 @@ namespace Bot
         List<Node> _nodes;
         private PrioritySelector tmpRootNode;
         public ScenarioController scenarioController;
-
+        private BotTrainerForm botTrainer;
 
         public List<Node> Nodes { get => _nodes; set => _nodes = value; }
 
@@ -49,7 +49,7 @@ namespace Bot
             Nodes.Add(dribble);
             tmpRootNode = new PrioritySelector(Nodes);
 
-            BotTrainerForm botTrainer = new BotTrainerForm(this);
+            botTrainer = new BotTrainerForm(this);
             Thread thread = new Thread(() =>
             {
                 Application.Run(botTrainer);

@@ -17,7 +17,7 @@ namespace Bot.BehaviourTree
         public override State Update(Bot agent, Packet packet)
         {
             bool hasRunningChild = false;
-            foreach (var node in m_nodes)
+            foreach (var node in Nodes)
             {
                 switch (node.Update(agent,packet))
                 {
