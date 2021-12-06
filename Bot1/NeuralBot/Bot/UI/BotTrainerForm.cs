@@ -1,12 +1,7 @@
 ﻿using Bot.BehaviourTree.Selectors;
+using Bot.Objects;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Bot.UI
@@ -37,7 +32,6 @@ namespace Bot.UI
                         statePanel.Controls.Add(rb);
                     }
                 }
-
             }
         }
 
@@ -58,6 +52,7 @@ namespace Bot.UI
                            .FirstOrDefault(n => n.Checked);
             if(button != null)
             {
+                Game.tickPacket.Players(_bot.Index);
                 //Save dataset
                 _bot.scenarioController.Generate();
             }

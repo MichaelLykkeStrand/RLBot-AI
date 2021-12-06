@@ -39,6 +39,8 @@ namespace Bot.Objects
 
 		public static Controller OutoutControls { get; set; }
 
+		public static rlbot.flat.GameTickPacket tickPacket { get; private set; }
+
 		/// <summary>The acceleration caused by gravity</summary>
 		public static Vector3 Gravity { get; private set; }
 
@@ -73,6 +75,7 @@ namespace Bot.Objects
 			IsRoundActive = packet.GameInfo.Value.IsRoundActive;
 			IsKickoffPause = packet.GameInfo.Value.IsKickoffPause;
 			IsMatchEnded = packet.GameInfo.Value.IsMatchEnded;
+			tickPacket = packet;
 
 			Gravity = new Vector3(0, 0, packet.GameInfo.Value.WorldGravityZ);
 		}

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Numerics;
-using Bot.AnalysisUtils;
+﻿using System.Collections.Generic;
 using Bot.BehaviourTree;
 using Bot.Utilities.Processed.BallPrediction;
 using Bot.Utilities.Processed.FieldInfo;
@@ -48,15 +44,12 @@ namespace Bot
             Nodes.Add(bzd);
             Nodes.Add(dribble);
             tmpRootNode = new PrioritySelector(Nodes);
-
             botTrainer = new BotTrainerForm(this);
             Thread thread = new Thread(() =>
             {
                 Application.Run(botTrainer);
             });
             thread.Start();
-
-
         }
 
         [HandleProcessCorruptedStateExceptions]
