@@ -29,6 +29,8 @@ namespace Bot.BehaviourTree.Actions
             Orientation carRotation = packet.Players[agent.Index].Physics.Rotation;
 
             
+
+            
             //Detects if it's a new kickoff and updates the kickoff position
             if(Game.IsKickoffPause && isNewKickoff)
             {
@@ -54,40 +56,95 @@ namespace Bot.BehaviourTree.Actions
 
             Controller output = new Controller();
 
-            
+            //Simple universal kickoff
             if(kickOffRunning)
-            {
-                if(frameCount > 1000)
+            {                    
+                Vector3 target = ballLocation + new Vector3(0, 400 * (float)(agent.Team - 0.5), 0);
+                Vector3 targetRelativeLocation = Orientation.RelativeLocation(carLocation, target, carRotation);
+                float correctionDiff = 0.5f;
+               
+                if(targetRelativeLocation.Length() > 650)
                 {
-                    kickOffRunning = false;
-                    return State.SUCCESS;
+                    output.Throttle = 1;
+                    output.Boost = true;
+                    if (targetRelativeLocation.Y > correctionDiff)
+                    {
+                        output.Steer = 0.1f;
+                    }
+                    else if (targetRelativeLocation.Y < -correctionDiff)
+                    {
+                        output.Steer = -0.1f;
+                    }
                 }
                 else
                 {
+                    Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
                     frameCount++;
-                    switch (kickOffPosition)
+                    output.Throttle = 1;
+                    if (frameCount < 5)
                     {
-                        case KickOffPosition.L:
-                            output = KickOffL();
-                            break;
-                        case KickOffPosition.CL:
-                            output = KickOffCL();
-                            break;
-                        case KickOffPosition.C:
-                            output = KickOffC();
-                            break;
-                        case KickOffPosition.CR:
-                            output = KickOffCR();
-                            break;
-                        case KickOffPosition.R:
-                            output = kickOffR();
-                            break;                      
+                        if (ballRelativeLocation.Y > 0)
+                        {
+                            output.Steer = 1;
+                        }
+                        else
+                        {
+                            output.Steer = -1;
+                        }
+                        output.Jump = true;
+                        output.Pitch = -1;
+                    } else if(frameCount < 25)
+                    {
+                        if (ballRelativeLocation.Y > 0)
+                        {
+                            output.Steer = 1;
+                        }
+                        else
+                        {
+                            output.Steer = -1;
+                        }
+                        output.Pitch = -1;
+                        output.Jump = false;
                     }
-                    
+                    else if(frameCount < 30)
+                    {
+                        if (ballRelativeLocation.Y > 0)
+                        {
+                            output.Steer = 1;
+                        }
+                        else
+                        {
+                            output.Steer = -1;
+                        }
+                        output.Pitch = -1;
+                        output.Jump = true;
+                    } else if(frameCount < 40)
+                    {
+                        return State.SUCCESS;
+                    }
+                   
                 }
 
 
-
+                //If you want to create a unique kick off for each start postition
+                //switch (kickOffPosition)
+                //{
+                //    case KickOffPosition.L:
+                //        output = KickOffL(agent, packet);
+                //        break;
+                //    case KickOffPosition.CL:
+                //        output = KickOffCL(agent, packet);
+                //        break;
+                //    case KickOffPosition.C:
+                //        output = KickOffC(agent,packet);
+                //        break;
+                //    case KickOffPosition.CR:
+                //        output = KickOffCR(agent, packet);
+                //        break;
+                //    case KickOffPosition.R:
+                //        output = kickOffR(agent, packet);
+                //        break;                      
+                //}
             }           
 
             Game.OutoutControls = output;
@@ -95,51 +152,44 @@ namespace Bot.BehaviourTree.Actions
 
         }
 
-        private Controller kickOffR()
+        private Controller kickOffR(Bot agent, Packet packet)
         {
             Controller output = new Controller();
-            output.Boost = true;
             output.Throttle = 1;
-            Console.WriteLine("Position R");
             return output;
         }
 
-        private Controller KickOffCR()
+        private Controller KickOffCR(Bot agent, Packet packet)
         {
             Controller output = new Controller();
-            output.Boost = true;
             output.Throttle = 1;
-            Console.WriteLine("Position CR");
             return output;
         }
 
-        private Controller KickOffC()
+        private Controller KickOffC(Bot agent, Packet packet)
         {
             Controller output = new Controller();
-            output.Boost = true;
             output.Throttle = 1;
-            Console.WriteLine("Position C");
             return output;
         }
 
-        private Controller KickOffCL()
+        
+
+        private Controller KickOffCL(Bot agent, Packet packet)
         {
             Controller output = new Controller();
-            output.Boost = true;
             output.Throttle = 1;
-            Console.WriteLine("Position CL");
             return output;
         }
 
-        private Controller KickOffL()
+        private Controller KickOffL(Bot agent, Packet packet)
         {
             Controller output = new Controller();
-            output.Boost = true;
             output.Throttle = 1;
-            Console.WriteLine("Position L");
             return output;
         }
 
+   
         private KickOffPosition SetKickOffPosition(Vector3 carLocation)
         {
             Vector3 L = new Vector3(-2047.87f, 2559.87f, 17.01f);

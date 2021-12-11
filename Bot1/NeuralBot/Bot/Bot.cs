@@ -51,12 +51,12 @@ namespace Bot
             
             tmpRootNode = new PrioritySelector(Nodes);
 
-            BotTrainerForm botTrainer = new BotTrainerForm(this);
-            Thread thread = new Thread(() =>
-            {
-                Application.Run(botTrainer);
-            });
-            thread.Start();
+            //BotTrainerForm botTrainer = new BotTrainerForm(this);
+          //  Thread thread = new Thread(() =>
+           // {
+           //     Application.Run(botTrainer);
+            //});
+            //thread.Start();
 
 
         }
