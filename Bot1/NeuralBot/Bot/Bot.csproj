@@ -85,6 +85,7 @@
     <Compile Include="BehaviourTree\Actions\BezierDrive.cs" />
     <Compile Include="BehaviourTree\Actions\Dribble.cs" />
     <Compile Include="BehaviourTree\Actions\FlipToBall.cs" />
+    <Compile Include="BehaviourTree\Actions\Kickoff.cs" />
     <Compile Include="BehaviourTree\Actions\Recover.cs" />
     <Compile Include="BehaviourTree\CompositeNode.cs" />
     <Compile Include="BehaviourTree\Node.cs" />
