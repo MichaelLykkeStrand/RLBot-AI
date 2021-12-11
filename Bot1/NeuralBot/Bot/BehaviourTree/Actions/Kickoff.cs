@@ -84,29 +84,34 @@ namespace Bot.BehaviourTree.Actions
             Vector3 CR = new Vector3(256, 3839.82f, 17.01f);
             Vector3 R = new Vector3(2048, 2560, 17.01f);
 
-            if(carLocation == L)
+            if(ApproximatelyEquals(carLocation,L,100))
             {
                 return KickOffPosition.L;
             }
-            if (carLocation == CL)
+            if (ApproximatelyEquals(carLocation, CL, 100))
             {
                 return KickOffPosition.CL;
             }
-            if (carLocation == C)
+            if (ApproximatelyEquals(carLocation, C, 100))
             {
                 return KickOffPosition.C;
             }
-            if (carLocation == CR)
+            if (ApproximatelyEquals(carLocation, CR, 100))
             {
                 return KickOffPosition.CR;
             }
-            if (carLocation == R)
+            if (ApproximatelyEquals(carLocation, R, 100))
             {
                 return KickOffPosition.R;
             }
 
             return KickOffPosition.ERROR;
 
+        }
+
+        static bool ApproximatelyEquals(Vector3 vector1, Vector3 vector2, double acceptableDifference)
+        {
+            return (vector2 - vector1).Length() < acceptableDifference;
         }
     }
 }
