@@ -18,12 +18,14 @@ namespace Bot.BehaviourTree
             {
                 output.Boost = true;
                 Game.OutoutControls = output;
-                return State.SUCCESS;
+                _state = State.SUCCESS;
+                return _state;
             }
 
             output.Boost = false;
             Game.OutoutControls = output;
-            return State.FAILURE;
+            _state = State.FAILURE;
+            return _state;
         }
     }
 }

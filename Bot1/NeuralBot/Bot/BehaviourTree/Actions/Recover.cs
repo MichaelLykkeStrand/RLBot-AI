@@ -30,10 +30,11 @@ namespace Bot.BehaviourTree.Actions
                     controller.Pitch = -0.5f;
 
                 Game.OutoutControls = controller;
-                return State.SUCCESS;
+                this._state = State.SUCCESS;
+                return _state;
             }
-
-            return State.FAILURE;
+            _state = State.FAILURE;
+            return _state;
             
         }
     }

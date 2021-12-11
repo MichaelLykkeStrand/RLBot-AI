@@ -83,12 +83,15 @@
     <Compile Include="ANN\Synapse.cs" />
     <Compile Include="BehaviourTree\Actions\ActionNode.cs" />
     <Compile Include="BehaviourTree\Actions\BezierDrive.cs" />
+    <Compile Include="BehaviourTree\Actions\CollectBoost.cs" />
     <Compile Include="BehaviourTree\Actions\Dribble.cs" />
     <Compile Include="BehaviourTree\Actions\FlipToBall.cs" />
     <Compile Include="BehaviourTree\Actions\Kickoff.cs" />
     <Compile Include="BehaviourTree\Actions\Recover.cs" />
+    <Compile Include="BehaviourTree\Actions\Wait.cs" />
     <Compile Include="BehaviourTree\CompositeNode.cs" />
     <Compile Include="BehaviourTree\Node.cs" />
+    <Compile Include="BehaviourTree\Selectors\NeuralSelector.cs" />
     <Compile Include="BehaviourTree\Selectors\PrioritySelector.cs" />
     <Compile Include="BehaviourTree\Selectors\Selector.cs" />
     <Compile Include="BehaviourTree\Sequences\Sequence.cs" />
