@@ -23,6 +23,7 @@ namespace Bot
         private PrioritySelector tmpRootNode;
         public ScenarioController scenarioController;
         private BotTrainerForm botTrainer;
+        public Packet LastPacket { get; private set; } // do you want to puke yet? :hehehe:
 
         public List<Node> Nodes { get => _nodes; set => _nodes = value; }
 
@@ -79,12 +80,12 @@ namespace Bot
         public override Controller GetOutput(rlbot.flat.GameTickPacket gameTickPacket)
         {
             // We process the gameTickPacket and convert it to our own internal data structure.
-            Packet packet = new Packet(gameTickPacket);
+            LastPacket = new Packet(gameTickPacket);
             // Updates the ball's position, velocity, etc
             Objects.Ball.Update(this, gameTickPacket.Ball.Value);
             // Updates the game's score, time, etc
             Game.Update(gameTickPacket);
-            var state = tmpRootNode.Update(this, packet);
+            var state = tmpRootNode.Update(this, LastPacket);
             return Game.OutoutControls;
         }
         
