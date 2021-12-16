@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bot.ANN
 {
-
+    [Serializable]
     public class Synapse
     {
         public Neuron inputNeuron;

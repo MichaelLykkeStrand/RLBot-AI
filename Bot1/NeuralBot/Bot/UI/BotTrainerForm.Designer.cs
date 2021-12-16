@@ -33,11 +33,12 @@ namespace Bot.UI
             this.submitButton = new System.Windows.Forms.Button();
             this.playButton = new System.Windows.Forms.Button();
             this.statePanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // submitButton
             // 
-            this.submitButton.Location = new System.Drawing.Point(713, 415);
+            this.submitButton.Location = new System.Drawing.Point(255, 41);
             this.submitButton.Name = "submitButton";
             this.submitButton.Size = new System.Drawing.Size(75, 23);
             this.submitButton.TabIndex = 1;
@@ -49,7 +50,7 @@ namespace Bot.UI
             // 
             this.playButton.Location = new System.Drawing.Point(255, 12);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(127, 23);
+            this.playButton.Size = new System.Drawing.Size(75, 23);
             this.playButton.TabIndex = 2;
             this.playButton.Text = "Play Scenario";
             this.playButton.UseVisualStyleBackColor = true;
@@ -59,14 +60,25 @@ namespace Bot.UI
             // 
             this.statePanel.Location = new System.Drawing.Point(12, 12);
             this.statePanel.Name = "statePanel";
-            this.statePanel.Size = new System.Drawing.Size(200, 426);
+            this.statePanel.Size = new System.Drawing.Size(200, 335);
             this.statePanel.TabIndex = 3;
+            // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(255, 70);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(75, 23);
+            this.SaveButton.TabIndex = 4;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // BotTrainerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(339, 359);
+            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.statePanel);
             this.Controls.Add(this.playButton);
             this.Controls.Add(this.submitButton);
@@ -80,5 +92,6 @@ namespace Bot.UI
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.Button playButton;
         private System.Windows.Forms.FlowLayoutPanel statePanel;
+        private System.Windows.Forms.Button SaveButton;
     }
 }

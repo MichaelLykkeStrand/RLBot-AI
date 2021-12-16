@@ -1,5 +1,6 @@
 ﻿namespace Bot.ANN
 {
+    [Serializable]
     public class DataSet
     {
         public double[] values;

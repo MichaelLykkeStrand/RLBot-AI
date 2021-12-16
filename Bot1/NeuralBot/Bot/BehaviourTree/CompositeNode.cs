@@ -34,5 +34,29 @@ namespace Bot.BehaviourTree
                 { "Children", new JArray(Nodes.Select(x => Serialization.SerializeObject(x)).ToArray()) }
             };
         }
+
+
+        public Node RecursiveFindNode(Predicate<Node> predicate)
+        {
+            if (predicate(this))
+                return this;
+
+            foreach (Node node in Nodes)
+            {
+                if (predicate(node))
+                    return node;
+
+                if (node is CompositeNode cnode)
+                {
+                    Node found = cnode.RecursiveFindNode(predicate);
+                    if (found != null)
+                    {
+                        return found;
+                    }
+                }
+                    
+            }
+            return null;
+        }
     }
 }

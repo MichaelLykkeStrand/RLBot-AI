@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Bot.ANN
 {
 
+    [Serializable]
     public class ANN
     {
         public double learningRate;

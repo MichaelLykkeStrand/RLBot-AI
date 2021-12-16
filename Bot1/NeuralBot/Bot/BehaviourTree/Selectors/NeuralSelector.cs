@@ -9,11 +9,29 @@ namespace Bot.BehaviourTree.Selectors
 {
     public class NeuralSelector : Selector
     {
-        public NeuralSelector(List<Node> nodes) : base(nodes) { }
+        private PrioritySelector _internalSelector;
+
+        public NeuralSelector(List<Node> nodes) : base(nodes) 
+        {
+            _internalSelector = new PrioritySelector(Nodes);
+        }
 
         public override State Update(Bot agent, Packet packet)
         {
-            throw new NotImplementedException();
+            AISortNodes(agent, packet);
+            _internalSelector.Nodes = Nodes;
+            return _internalSelector.Update(agent, packet);
+        }
+
+        private void AISortNodes (Bot agent, Packet packet)
+        {
+            // TODO: Implement AI thingies.
+        }
+
+        public void ForceFirstNode (Node node)
+        {
+            Nodes.Remove(node);
+            Nodes.Insert(0, node);
         }
     }
 }

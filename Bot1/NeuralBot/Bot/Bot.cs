@@ -13,6 +13,7 @@ using Bot.Scenario;
 using RLBotDotNet.GameState;
 using System.Runtime.ExceptionServices;
 using Bot.BehaviourTree.Actions;
+using Bot.BehaviourTree.Selectors;
 
 namespace Bot
 {
@@ -20,12 +21,11 @@ namespace Bot
     public class Bot : RLBotDotNet.Bot
     {
         List<Node> _nodes;
-        private PrioritySelector tmpRootNode;
         public ScenarioController scenarioController;
         private BotTrainerForm botTrainer;
         public Packet LastPacket { get; private set; } // do you want to puke yet? :hehehe:
 
-        public List<Node> Nodes { get => _nodes; set => _nodes = value; }
+        public CompositeNode RootNode { get; private set; }
 
         // We want the constructor for our Bot to extend from RLBotDotNet.Bot, but we don't want to add anything to it.
         // You might want to add logging initialisation or other types of setup up here before the bot starts.
@@ -34,21 +34,32 @@ namespace Bot
             scenarioController = new ScenarioController(this);
             scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
             scenarioController.OnPlayScenario += ScenarioController_OnPlayScenario;
-            Nodes = new List<Node>();
+            var nodes = new List<Node>();
             Recover recover = new Recover();
             Dribble dribble = new Dribble();
             //FlipToBall ftb = new FlipToBall();
             BezierDrive bzd = new BezierDrive();
             //Nodes.Add(ftb);
-            Nodes.Add(recover);
-            Nodes.Add(new CollectBoost());
-            Nodes.Add(bzd);
-            Nodes.Add(dribble);
-            tmpRootNode = new PrioritySelector(Nodes);
+            nodes.Add(recover);
+            nodes.Add(new CollectBoost());
+            nodes.Add(bzd);
+            nodes.Add(dribble);
+            NeuralSelector node = new NeuralSelector(nodes);
+            RootNode = new PrioritySelector(new List<Node>() { node });
             botTrainer = new BotTrainerForm(this);
             Thread thread = new Thread(() =>
             {
-                Application.Run(botTrainer);
+                while (true)
+                {
+                    Thread.Sleep(10000);
+                    try
+                    {
+                        Application.Run(botTrainer);
+                    } catch (Exception exc)
+                    {
+                        Console.WriteLine("Failed to open bot trainer, trying again in 10 seconds.");
+                    }
+                }
             });
             thread.Start();
         }
@@ -85,7 +96,7 @@ namespace Bot
             Objects.Ball.Update(this, gameTickPacket.Ball.Value);
             // Updates the game's score, time, etc
             Game.Update(gameTickPacket);
-            var state = tmpRootNode.Update(this, LastPacket);
+            var state = RootNode.Update(this, LastPacket);
             return Game.OutoutControls;
         }
         

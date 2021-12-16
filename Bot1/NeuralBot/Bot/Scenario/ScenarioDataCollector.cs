@@ -13,55 +13,30 @@ namespace Bot.Scenario
 {
     public class ScenarioDataCollector
     {
-        private bool _isRunning;
-
         private List<double[]> _values = new List<double[]>();
         private List<double[]> _targets = new List<double[]>();
 
-        private double _collectionFrequency;
         private Bot _bot;
-        private Func<bool>[] _targetFuncs;
 
-        public ScenarioDataCollector(double collectionFrequency, Bot bot, params Func<bool>[] targetFuncs)
+        public ScenarioDataCollector(Bot bot)
         {
             _bot = bot;
-            _targetFuncs = targetFuncs;
             Reset(); // bit dirty maybe? idk and idc enough.
-        }
-
-        public void StartCollection ()
-        {
-            Console.WriteLine("Data collection starting..");
-            Thread thread = new Thread(new ThreadStart(RunCollection));
-            _isRunning = true;
-            thread.Start();
-        }
-
-        public void StopCollection ()
-        {
-            Console.WriteLine("Data collection stopping..");
-            _isRunning = false;
         }
 
         public void Reset ()
         {
-            _isRunning = false;
             _values.Clear();
             _targets.Clear();
         }
 
-        private void RunCollection ()
+        public void Collect(double[] targets)
         {
-            Console.WriteLine("Data collection running..");
-            while (!_isRunning) // Was originally a CancellationToken but decided a boolean was simpler.
-            {
-                double[] values = GatherValues();
-                double[] targets = GatherTargets();
+            double[] values = GatherValues();
 
-                _values.Add(values);
-                _targets.Add(targets);
-            }
-            Console.WriteLine("Data collection stopped.");
+            _values.Add(values);
+            _targets.Add(targets);
+            Console.WriteLine("Data collected.");
         }
 
         public List<DataSet> ToDataSets () // bit of a reach, could use an intermediary class, but fuck you >:D
@@ -104,16 +79,6 @@ namespace Bot.Scenario
                 ball.Physics.Location.Y,
                 ball.Physics.Location.Z
                 };
-        }
-
-        private double[] GatherTargets ()
-        {
-            double[] targets = new double[_targetFuncs.Length];
-            for (int i = 0; i < targets.Length; i++)
-            {
-                targets[i] = _targetFuncs[i]() ? 1 : 0;
-            }
-            return targets;
         }
     }
 }

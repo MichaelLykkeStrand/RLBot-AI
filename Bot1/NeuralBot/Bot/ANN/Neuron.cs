@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bot.ANN
 {
+    [Serializable]
     public class Neuron
     {
         public List<Synapse> inputs;
