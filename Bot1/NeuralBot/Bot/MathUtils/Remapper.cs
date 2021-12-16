@@ -12,5 +12,7 @@ namespace Bot.MathUtils
         {
             return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
+
+        public static float Lerp(float a, float b, float t) => a + (b - a) * t;
     }
 }

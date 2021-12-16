@@ -43,9 +43,10 @@ namespace Bot
             Kickoff kick = new Kickoff();
             //FlipToBall ftb = new FlipToBall();
             //BezierDrive bzd = new BezierDrive();
-            Nodes.Add(kick);
+            Nodes.Add(new Wait());
+            //Nodes.Add(kick);
             //Nodes.Add(ftb);
-            Nodes.Add(recover);
+            //Nodes.Add(recover);
             //Nodes.Add(bzd);
             //Nodes.Add(dribble);
             
