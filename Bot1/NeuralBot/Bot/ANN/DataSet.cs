@@ -1,4 +1,6 @@
-﻿namespace Bot.ANN
+﻿using System;
+
+namespace Bot.ANN
 {
     [Serializable]
     public class DataSet

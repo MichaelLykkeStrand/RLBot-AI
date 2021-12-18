@@ -116,7 +116,7 @@
     <Compile Include="Serialization.cs" />
     <Compile Include="Utilities\CarAgent.cs" />
     <Compile Include="Utilities\DataConversion.cs" />
-    <Compile Include="Utilities\DataSetIO.cs" />
+    <Compile Include="Utilities\NeuralNetworkIO.cs" />
     <Compile Include="Utilities\Processed\BallPrediction\PredictionSlice.cs" />
     <Compile Include="Utilities\Processed\BallPrediction\BallPrediction.cs" />
     <Compile Include="Utilities\Processed\FieldInfo\BoostPad.cs" />
