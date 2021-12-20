@@ -51,7 +51,7 @@ namespace Bot
             {
                 while (true)
                 {
-                    Thread.Sleep(10000);
+                    
                     try
                     {
                         Application.Run(botTrainer);
@@ -59,6 +59,7 @@ namespace Bot
                     {
                         Console.WriteLine("Failed to open bot trainer, trying again in 10 seconds.");
                     }
+                    Thread.Sleep(10000);
                 }
             });
             thread.Start();

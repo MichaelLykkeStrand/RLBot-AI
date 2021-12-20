@@ -85,6 +85,7 @@ namespace Bot.UI
             try
             {
                 var datasets = _collector.ToDataSets();
+                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), REL_STORE_PATH));
                 NeuralNetworkIO.StoreDataSets(datasets, GetStorePath());
                 _collector.Reset();
             }catch (Exception exc)
