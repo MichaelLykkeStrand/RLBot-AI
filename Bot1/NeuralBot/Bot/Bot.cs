@@ -36,7 +36,7 @@ namespace Bot
             scenarioController.OnPlayScenario += ScenarioController_OnPlayScenario;
             var nodes = new List<Node>();
             nodes.Add(new Kickoff());
-            nodes.Add(new FlipToBall());
+            //nodes.Add(new FlipToBall());
             nodes.Add(new Dribble());
             nodes.Add(new Recover());
             nodes.Add(new CollectBoost());

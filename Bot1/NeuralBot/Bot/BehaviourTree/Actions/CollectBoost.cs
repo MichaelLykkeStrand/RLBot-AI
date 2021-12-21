@@ -1,4 +1,5 @@
-﻿using Bot.Objects;
+﻿using Bot.AnalysisUtils;
+using Bot.Objects;
 using Bot.Utilities.Processed.FieldInfo;
 using Bot.Utilities.Processed.Packet;
 using RLBotDotNet;
@@ -41,6 +42,9 @@ namespace Bot.BehaviourTree.Actions
                         {
                             controls.Steer = -1;
                         }
+                        if (Math.Abs(relativeLocation.Z) < 100 && padDistance < 500) controls.Handbrake = true;
+                        controls.Throttle = 1;
+                        //controls.Boost = true;
                         agent.Renderer.DrawString2D("Y: " + relativeLocation.Y, Color.Yellow,new Vector2(20,100), 1, 1);
                         Game.OutoutControls = controls;
                         _state = State.SUCCESS;

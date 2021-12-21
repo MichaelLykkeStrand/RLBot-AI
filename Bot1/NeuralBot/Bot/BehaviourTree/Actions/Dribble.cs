@@ -26,10 +26,15 @@ namespace Bot.BehaviourTree.Actions
             Orientation carRotation = packet.Players[agent.Index].Physics.Rotation;
             Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
             Vector3 oponentGoal = Field.GetOpponentGoal(agent);
-            Vector3 opponentRelativeGoal = Orientation.RelativeLocation(carLocation, oponentGoal, carRotation);
+            if (BallSimulation.PredictFutureGoal(agent.GetBallPrediction()) != null)
+            {
+                _state = State.FAILURE;
+                return _state;
+            }
+            
             var distance = Vector3.Distance(carLocation, ballLocation);
 
-            if (distance < successDistance && opponentRelativeGoal.Y < 0.5 && opponentRelativeGoal.Y > -0.5) //TODO check if ball is near ground
+            if (distance < successDistance) //TODO check if ball is near ground
             {
                 Controller closeControls = Game.OutoutControls;
                 if (ballRelativeLocation.Y > correctionDiff)
