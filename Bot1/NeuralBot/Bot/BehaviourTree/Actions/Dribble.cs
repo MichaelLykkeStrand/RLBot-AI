@@ -90,7 +90,6 @@ namespace Bot.BehaviourTree.Actions
                     closeControls.Steer = 1;
                 else if (targetRelativeLocation.Y < -correctionDiff)
                     closeControls.Steer = -1;
-                }
                 else
                 {
                     closeControls.Boost = true;
@@ -113,7 +112,7 @@ namespace Bot.BehaviourTree.Actions
                 Game.OutoutControls = closeControls;
                 _state = State.SUCCESS;
                 return _state;
-            }
+        }
             _state = State.FAILURE;
             return _state;
 
