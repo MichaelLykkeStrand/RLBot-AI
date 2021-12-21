@@ -1,6 +1,7 @@
 ﻿using Bot.AnalysisUtils;
 using Bot.MathUtils;
 using Bot.Objects;
+using Bot.Utilities.Processed.BallPrediction;
 using Bot.Utilities.Processed.Packet;
 using RLBotDotNet;
 using System;
@@ -26,6 +27,17 @@ namespace Bot.BehaviourTree.Actions
             Orientation carRotation = packet.Players[agent.Index].Physics.Rotation;
             Vector3 ballRelativeLocation = Orientation.RelativeLocation(carLocation, ballLocation, carRotation);
             Vector3 oponentGoal = Field.GetOpponentGoal(agent);
+            PredictionSlice? futureBallPrediciton = BallSimulation.FindSliceAtTime(agent.GetBallPrediction(), Game.Time+4f);
+            PredictionSlice futureBall;
+            if(futureBallPrediciton != null)
+            {
+                futureBall =  (PredictionSlice)futureBallPrediciton;
+                if(futureBall.Physics.Location.Z > 0)
+                {
+                    _state = State.FAILURE;
+                    return _state;
+                }
+            }
             if (BallSimulation.PredictFutureGoal(agent.GetBallPrediction()) != null)
             {
                 _state = State.FAILURE;
