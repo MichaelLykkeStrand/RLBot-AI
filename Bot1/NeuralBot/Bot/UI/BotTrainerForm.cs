@@ -22,7 +22,7 @@ namespace Bot.UI
             InitializeComponent();
             bot.scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
             _bot.scenarioController.Generate();
-            InitializeStateButtons();
+            //InitializeStateButtons();
 
             _collector = new ScenarioDataCollector(_bot);
         }

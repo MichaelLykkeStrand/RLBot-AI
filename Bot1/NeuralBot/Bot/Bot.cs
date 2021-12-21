@@ -35,23 +35,20 @@ namespace Bot
             scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
             scenarioController.OnPlayScenario += ScenarioController_OnPlayScenario;
             var nodes = new List<Node>();
-            Recover recover = new Recover();
-            Dribble dribble = new Dribble();
-            //FlipToBall ftb = new FlipToBall();
-            BezierDrive bzd = new BezierDrive();
-            //Nodes.Add(ftb);
-            nodes.Add(recover);
+            nodes.Add(new Kickoff());
+            nodes.Add(new FlipToBall());
+            nodes.Add(new Dribble());
+            nodes.Add(new Recover());
             nodes.Add(new CollectBoost());
-            nodes.Add(bzd);
-            nodes.Add(dribble);
-            NeuralSelector node = new NeuralSelector(nodes);
-            RootNode = new PrioritySelector(new List<Node>() { node });
+            nodes.Add(new BezierDrive());
+
+            //NeuralSelector node = new NeuralSelector(nodes);
+            RootNode = new PrioritySelector(nodes);
             botTrainer = new BotTrainerForm(this);
             Thread thread = new Thread(() =>
             {
                 while (true)
                 {
-                    
                     try
                     {
                         Application.Run(botTrainer);
