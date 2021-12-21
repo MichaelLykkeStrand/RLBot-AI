@@ -20,7 +20,6 @@ namespace Bot
     // We want to our bot to derive from Bot, and then implement its abstract methods.
     public class Bot : RLBotDotNet.Bot
     {
-        List<Node> _nodes;
         public ScenarioController scenarioController;
         private BotTrainerForm botTrainer;
         public Packet LastPacket { get; private set; } // do you want to puke yet? :hehehe:
@@ -31,6 +30,7 @@ namespace Bot
         // You might want to add logging initialisation or other types of setup up here before the bot starts.
         public Bot(string botName, int botTeam, int botIndex) : base(botName, botTeam, botIndex)
         {
+            Console.WriteLine("test");
             scenarioController = new ScenarioController(this);
             scenarioController.OnNewScenarioReady += ScenarioController_OnNewScenarioReady;
             scenarioController.OnPlayScenario += ScenarioController_OnPlayScenario;
@@ -42,8 +42,8 @@ namespace Bot
             nodes.Add(new CollectBoost());
             nodes.Add(new BezierDrive());
 
-            //NeuralSelector node = new NeuralSelector(nodes);
-            RootNode = new PrioritySelector(nodes);
+            RootNode = new NeuralSelector(nodes);
+
             botTrainer = new BotTrainerForm(this);
             Thread thread = new Thread(() =>
             {
