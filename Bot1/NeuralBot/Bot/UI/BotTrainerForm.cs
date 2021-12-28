@@ -1,8 +1,10 @@
-﻿using Bot.BehaviourTree.Selectors;
+﻿using Bot.ANN;
+using Bot.BehaviourTree.Selectors;
 using Bot.Objects;
 using Bot.Scenario;
 using Bot.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -11,6 +13,8 @@ namespace Bot.UI
 {
     public partial class BotTrainerForm : Form
     {
+        private const int TRAINER_EPOCHS = 1000;
+
         private const string REL_STORE_PATH = "/datasets/";
         
         private Bot _bot;
@@ -78,7 +82,8 @@ namespace Bot.UI
             _bot.scenarioController.PlayScenario();
         }
 
-        private string GetStorePath() => Path.Combine(Directory.GetCurrentDirectory(), REL_STORE_PATH) + Guid.NewGuid() + ".json";
+        private string GetBasePath() => Path.Combine(Directory.GetCurrentDirectory(), REL_STORE_PATH);
+        private string GetStorePath() => GetBasePath() + Guid.NewGuid() + ".json";
 
         private void button1_Click(object sender, EventArgs e) // deal with it
         {
@@ -92,6 +97,47 @@ namespace Bot.UI
             {
                 Console.WriteLine(exc.Message + ", " + exc.StackTrace);
             }
+        }
+
+        private void TrainAI_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = GetBasePath();
+            dialog.DefaultExt = "json";
+            dialog.FileOk += (s, cea) =>
+            {
+                IEnumerable<DataSet> dataSets = dialog.FileNames.SelectMany(x => NeuralNetworkIO.LoadDataSets(x));
+                Trainer trainer = new Trainer(dataSets, TRAINER_EPOCHS);
+                trainer.TrainAFucker();
+                ANN.ANN ann = trainer.NeuralNetwork;
+
+                SaveFileDialog svd = new SaveFileDialog();
+                svd.InitialDirectory = GetBasePath();
+                svd.DefaultExt = "json";
+
+                svd.FileOk += (s2, cea2) =>
+                {
+                    NeuralNetworkIO.StoreBrain(ann, svd.FileName);
+                    svd.Dispose();
+                };
+
+                svd.ShowDialog();
+                dialog.Dispose();
+            };
+
+            dialog.ShowDialog();
+        }
+
+        private void LoadAI_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.InitialDirectory = GetBasePath();
+            dialog.DefaultExt = "json";
+            dialog.FileOk += (s, cea) =>
+            {
+                GetNeuralSelector().Set
+                dialog.Dispose();
+            };
         }
     }
 }
