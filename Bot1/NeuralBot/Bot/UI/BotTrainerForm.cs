@@ -135,9 +135,10 @@ namespace Bot.UI
             dialog.DefaultExt = "json";
             dialog.FileOk += (s, cea) =>
             {
-                GetNeuralSelector().Set
+                GetNeuralSelector().NeuralNetwork = NeuralNetworkIO.LoadBrain(dialog.FileName);
                 dialog.Dispose();
             };
+            dialog.ShowDialog();
         }
     }
 }
