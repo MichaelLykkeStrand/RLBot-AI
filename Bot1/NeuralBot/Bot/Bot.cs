@@ -41,8 +41,9 @@ namespace Bot
             nodes.Add(new Recover());
             nodes.Add(new CollectBoost());
             nodes.Add(new BezierDrive());
+            nodes.Add(new Wait());
 
-            RootNode = new NeuralSelector(nodes);
+            RootNode = new PrioritySelector(nodes);
 
             botTrainer = new BotTrainerForm(this);
             Thread thread = new Thread(() =>
