@@ -30,14 +30,16 @@ namespace Bot.BehaviourTree.Selectors
 
         private void AISortNodes (Bot agent, Packet packet)
         {
-            int ourIndex = agent.Index;
-            int enemyIndex = ourIndex == 0 ? 1 : 0;
+            if (NeuralNetwork != null)
+            {
+                int ourIndex = agent.Index;
+                int enemyIndex = ourIndex == 0 ? 1 : 0;
 
-            Player player = packet.Players[ourIndex];
-            Player enemy = packet.Players[enemyIndex];
-            Ball ball = packet.Ball;
+                Player player = packet.Players[ourIndex];
+                Player enemy = packet.Players[enemyIndex];
+                Ball ball = packet.Ball;
 
-            double[] values = new double[] {
+                double[] values = new double[] {
                 player.Physics.Location.X,
                 player.Physics.Location.Y,
                 player.Physics.Location.Z,
@@ -49,11 +51,12 @@ namespace Bot.BehaviourTree.Selectors
                 ball.Physics.Location.Z
                 };
 
-            double[] results = NeuralNetwork.Compute(values);
-            Node[] nodes = _baseNodes.ToArray();
+                double[] results = NeuralNetwork.Compute(values);
+                Node[] nodes = _baseNodes.ToArray();
 
-            Array.Sort(results, nodes);
-            Nodes = nodes.ToList(); // bunch of copying but should be far from enough for a performance impact
+                Array.Sort(results, nodes);
+                Nodes = nodes.ToList(); // bunch of copying but should be far from enough for a performance impact
+            }
         }
 
         public void ForceFirstNode (Node node)

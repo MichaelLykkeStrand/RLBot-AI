@@ -81,6 +81,7 @@
     <Compile Include="ANN\DataSet.cs" />
     <Compile Include="ANN\Neuron.cs" />
     <Compile Include="ANN\Synapse.cs" />
+    <Compile Include="ANN\Trainer.cs" />
     <Compile Include="BehaviourTree\Actions\ActionNode.cs" />
     <Compile Include="BehaviourTree\Actions\BezierDrive.cs" />
     <Compile Include="BehaviourTree\Actions\CollectBoost.cs" />
