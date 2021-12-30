@@ -1,4 +1,5 @@
 ﻿using Bot.ANN;
+using Bot.BehaviourTree;
 using Bot.BehaviourTree.Selectors;
 using Bot.Objects;
 using Bot.Scenario;
@@ -36,11 +37,17 @@ namespace Bot.UI
             return (NeuralSelector)_bot.RootNode.RecursiveFindNode(x => x.GetType() == typeof (NeuralSelector));
         }
 
+        private PrioritySelector GetPrioritySelector()
+        {
+            return (PrioritySelector)_bot.RootNode.RecursiveFindNode(x => x.GetType() == typeof(PrioritySelector));
+        }
+
 
         private void InitializeStateButtons()
         {
-            NeuralSelector neuralSelector = GetNeuralSelector();
-            foreach (var child in neuralSelector.Nodes)
+            Selector selector = GetNeuralSelector();
+            if(selector == null) selector = GetPrioritySelector();
+            foreach (var child in selector.Nodes)
             {
                 RadioButton rb = new RadioButton();
                 rb.Text = child.GetType().Name;
