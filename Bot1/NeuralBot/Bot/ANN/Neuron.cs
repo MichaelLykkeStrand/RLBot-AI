@@ -20,8 +20,7 @@ namespace Bot.ANN
             Random random = new Random();
             inputs = new List<Synapse>();
             outputs = new List<Synapse>();
-            bias = (random.NextDouble() * (1 - 1) + 1);
-                
+            bias = (random.NextDouble() * 2 - 1);
         }
 
         public Neuron(IEnumerable<Neuron> inputNeurons) : this()

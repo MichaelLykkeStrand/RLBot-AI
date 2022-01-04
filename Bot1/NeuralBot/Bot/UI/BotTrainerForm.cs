@@ -96,11 +96,20 @@ namespace Bot.UI
         {
             try
             {
-                var datasets = _collector.ToDataSets();
-                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), REL_STORE_PATH));
-                NeuralNetworkIO.StoreDataSets(datasets, GetStorePath());
-                _collector.Reset();
-            }catch (Exception exc)
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.InitialDirectory = GetBasePath();
+                dialog.DefaultExt = "json";
+                dialog.FileOk += (s, cea) =>
+                {
+                    var datasets = _collector.ToDataSets();
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), REL_STORE_PATH));
+                    NeuralNetworkIO.StoreDataSets(datasets, GetStorePath());
+                    _collector.Reset();
+                };
+
+                dialog.ShowDialog();
+            }
+            catch (Exception exc)
             {
                 Console.WriteLine(exc.Message + ", " + exc.StackTrace);
             }
@@ -120,7 +129,7 @@ namespace Bot.UI
 
                 SaveFileDialog svd = new SaveFileDialog();
                 svd.InitialDirectory = GetBasePath();
-                svd.DefaultExt = "json";
+                svd.DefaultExt = "bin";
 
                 svd.FileOk += (s2, cea2) =>
                 {
@@ -139,7 +148,7 @@ namespace Bot.UI
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.InitialDirectory = GetBasePath();
-            dialog.DefaultExt = "json";
+            dialog.DefaultExt = "bin";
             dialog.FileOk += (s, cea) =>
             {
                 GetNeuralSelector().NeuralNetwork = NeuralNetworkIO.LoadBrain(dialog.FileName);

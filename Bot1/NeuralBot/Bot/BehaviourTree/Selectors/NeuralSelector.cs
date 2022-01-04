@@ -40,15 +40,15 @@ namespace Bot.BehaviourTree.Selectors
                 Ball ball = packet.Ball;
 
                 double[] values = new double[] {
-                player.Physics.Location.X,
-                player.Physics.Location.Y,
-                player.Physics.Location.Z,
-                enemy.Physics.Location.X,
-                enemy.Physics.Location.Y,
-                enemy.Physics.Location.Z,
-                ball.Physics.Location.X,
-                ball.Physics.Location.Y,
-                ball.Physics.Location.Z
+                    player.Physics.Location.X,
+                    player.Physics.Location.Y,
+                    player.Physics.Location.Z,
+                    enemy.Physics.Location.X,
+                    enemy.Physics.Location.Y,
+                    enemy.Physics.Location.Z,
+                    ball.Physics.Location.X,
+                    ball.Physics.Location.Y,
+                    ball.Physics.Location.Z
                 };
 
                 double[] results = NeuralNetwork.Compute(values);

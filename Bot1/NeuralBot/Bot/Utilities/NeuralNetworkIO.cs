@@ -67,7 +67,7 @@ namespace Bot.Utilities
         private static T LoadObject<T> (string path)
         {
             string text = File.ReadAllText(path);
-            JObject obj = JObject.Parse(text);
+            JToken obj = JToken.Parse(text);
             return obj.ToObject<T>();
         }
 

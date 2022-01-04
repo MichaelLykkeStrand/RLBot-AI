@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Bot.BehaviourTree;
 using Bot.Utilities.Processed.BallPrediction;
 using Bot.Utilities.Processed.FieldInfo;
@@ -43,7 +43,7 @@ namespace Bot
             nodes.Add(new BezierDrive());
             nodes.Add(new Wait());
 
-            RootNode = new PrioritySelector(nodes);
+            RootNode = new NeuralSelector(nodes);
 
             botTrainer = new BotTrainerForm(this);
             Thread thread = new Thread(() =>
@@ -52,14 +52,17 @@ namespace Bot
                 {
                     try
                     {
+                        
                         Application.Run(botTrainer);
                     } catch (Exception exc)
                     {
                         Console.WriteLine("Failed to open bot trainer, trying again in 10 seconds.");
+                        Console.WriteLine(exc.Message + " - " + exc.StackTrace);
                     }
                     Thread.Sleep(10000);
                 }
             });
+            thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
         }
 
