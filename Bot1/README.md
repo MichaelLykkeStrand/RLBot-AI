@@ -41,6 +41,13 @@ your bot will work right in the next tournament!
 1. In the "Installed Packages" section, click on the package called "RLBot.Framework".
 1. If the "Version" dropdown contains a higher version than what your project currently has, you can select that version and click the Upgrade button next to the dropdown to upgrade.
 
+## Training and Loading Brains
+
+The AI by default does not contain a neural network brain, instead the order of behaviour tree nodes is preset in the Neural Selector Node (NSN). A brain must be loaded during runtime for the NSN to use a neural network. This is done using the UI.
+
+1. (Optional) Train an AI by pressing the "Train AI" button and selecting a JSON dataset. Once training is completed a prompt will appear for saving the brain.
+2. Load an AI using the "Load AI" button, which loads and assigns the brain to the NSN.
+
 ## Notes
 
 - Bot behavior is controlled by `CSharpBot/Bot/Bot.cs`
