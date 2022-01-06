@@ -55,7 +55,8 @@ namespace Bot.BehaviourTree.Selectors
                 Node[] nodes = _baseNodes.ToArray();
 
                 Array.Sort(results, nodes);
-                Nodes = nodes.ToList(); // bunch of copying but should be far from enough for a performance impact
+                var enumerable = nodes.Reverse(); // shut up it's 8 in the morning
+                Nodes = enumerable.ToList(); // bunch of copying but should be far from enough for a performance impact
             }
         }
 
