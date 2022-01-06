@@ -101,6 +101,10 @@ namespace Bot.BehaviourTree.Actions
                 {
                     closeControls.Throttle = 1;
                     closeControls.Boost = false;
+                    if(targetRelativeLocation.Z < 30)
+                    {
+                        closeControls.Handbrake = true;
+                    }
                 }
                 else
                 {
