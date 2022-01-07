@@ -50,8 +50,9 @@ The AI by default does not contain a neural network brain, instead the order of 
 
 ## Notes
 
-- Bot behavior is controlled by `CSharpBot/Bot/Bot.cs`
+- Bot behavior is controlled by `NeuralBot/Bot/Bot.cs`
 - Bot appearance is controlled by `PythonAgent/appearance.cfg`
+- Solution is located at `NeuralBot/Bot.sln`
 
 ## Overview of how the C# bot interacts with Python
 
