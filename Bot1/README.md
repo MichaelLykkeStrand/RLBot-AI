@@ -52,6 +52,7 @@ The AI by default does not contain a neural network brain, instead the order of 
 
 - Bot behavior is controlled by `NeuralBot/Bot/Bot.cs`
 - Bot appearance is controlled by `PythonAgent/appearance.cfg`
+- The bot has to be added in the rocket league gui to work
 
 ## Overview of how the C# bot interacts with Python
 
